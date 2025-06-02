@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Categories</title>
+    <link rel="stylesheet" href="../stylesheets/Quick Links.css">
+
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+  <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+    
+</head>
+<body class="order-delivery">
+    
+        <%- include('../partials/navbar') %>
+      
+
+    <div class="container">
+        <div class="help-categories">
+            <div class="categories">
+                <h2><strong>Help Categories</strong></h2>
+                <ul>
+                  <li id="order-delivery" class="active-category"><a href="/help/orderDeliverInformation" style="text-decoration: none; color: inherit;">Order Delivery Information</a></li>
+                  <li id="my-account"><a href="/help/myAccount" style="text-decoration: none; color: inherit;">My Account</a></li>
+                  <li id="payment"><a href="/help/payments" style="text-decoration: none; color: inherit;">Payment Options</a></li>
+                  <li id="returns"><a href="/help/returns" style="text-decoration: none; color: inherit;">Returns and Exchanges</a></li>
+              </ul>
+            </div>
+            <div class="faq-content">
+                <div id="order-delivery-content" class="faq-section"></div>
+                <h2>Order Delivery and Shopping</h2>
+                <div class="faq-item">
+                    <button>How can I know the status of my order?</button>
+                    <div class="answer">
+                        You can track your order using the tracking ID provided in your confirmation email.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button>What happens if my order is lost in transit?</button>
+                    <div class="answer">
+                        If your order is lost, please contact our support team for a resolution.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button>Where do you deliver within India?</button>
+                    <div class="answer">
+                       We deliver to all major cities and towns across India.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button>I live outside India. Can I order for something to be delivered in India?</button>
+                    <div class="answer">
+                        Yes, you can place an order from outside India for delivery within the country.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button>Do I need to pay shipping delivery charges?</button>
+                    <div class="answer">
+                        Shipping charges depend on your order and location. Details are provided at checkout.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button>Can I modify my order after placing it?</button>
+                    <div class="answer">
+                        Once an order is placed, modifications might not be possible. Please contact our support team immediately for
+                        assistance.
+                    </div>
+                </div>
+            
+                <div class="faq-item">
+                    <button>How can I cancel my order?</button>
+                    <div class="answer">
+                        You can cancel your order by visiting the "My Orders" section in your account or contacting customer support.
+                    </div>
+                </div>
+            
+                <div class="faq-item">
+                    <button>What should I do if I receive the wrong item?</button>
+                    <div class="answer">
+                        If you receive the wrong item, please contact our customer support team immediately to arrange a replacement or
+                        refund.
+                    </div>
+                </div>
+            
+                <div class="faq-item">
+                    <button>How do I know if my order has been successfully placed?</button>
+                    <div class="answer">
+                        Once your order is placed, you will receive a confirmation email and SMS with your order details.
+                    </div>
+                </div>  
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+      <script>
+        // Toggle FAQ answers and close others
+        const faqButtons = document.querySelectorAll('.faq-item button');
+        const categories = document.querySelectorAll('.categories ul li');
+
+        faqButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Close all answers
+                faqButtons.forEach(btn => {
+                    if (btn !== button) {
+                        btn.classList.remove('active');
+                        btn.nextElementSibling.style.display = 'none';
+                    }
+                });
+
+                // Toggle current answer
+                button.classList.toggle('active');
+                const answer = button.nextElementSibling;
+                answer.style.display = button.classList.contains('active') ? 'block' : 'none';
+            });
+        });
+
+        // Highlight selected category
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                // Remove active class from all categories
+                categories.forEach(cat => cat.classList.remove('active-category'));
+                
+                // Add active class to clicked category
+                category.classList.add('active-category');
+
+                // Update FAQ title
+                document.querySelector('.faq-content h2').textContent = category.textContent;
+            });
+        });
+    </script>
+    
+   
+<%- include('../partials/footer') %>

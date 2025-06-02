@@ -1,0 +1,165 @@
+<!-- <%- include('../partials/header', { title: 'Checkout' }) %>
+
+<h2>Checkout</h2>
+
+<h3>Products:</h3>
+<ul>
+  <% products.forEach((product, index) => { %>
+    <li>
+      <strong>Product Name:</strong> <%= product.name %><br>
+      <strong>Price:</strong> $<%= product.price.toFixed(2) %><br>
+      <strong>Description:</strong> <%= product.description || 'No description available' %><br>
+      <strong>Total Products:</strong> <%= totalProducts %><br>
+      <strong>Total Amount: $</strong><%= totalAmount.toFixed(2) %></strong>
+    </li>
+  <% }) %>
+</ul>
+
+<div class="checkout-actions">
+  <button type="button" class="btn" onclick="proceedToPayment()">Proceed to Payment</button>
+  <button type="button" class="btn" onclick="cancelCheckout()">Cancel</button>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  function proceedToPayment() {
+  const items = Array.from(document.querySelectorAll('ul li')).map(item => {
+    try {
+      const productNameText = item.querySelector('strong:nth-of-type(1)').nextSibling?.nodeValue?.trim();
+      const priceText = item.querySelector('strong:nth-of-type(2)').nextSibling?.nodeValue?.trim();
+
+      const productName = productNameText.replace(':', '').trim();
+      const price = parseFloat(priceText.replace('$', '').trim());
+      const quantity = 1; // Adjust logic if quantity is dynamic
+
+      if (!productName || isNaN(price)) throw new Error("Invalid product data");
+
+      return { name: productName, price, quantity };
+    } catch (error) {
+      console.error("Error parsing product data:", error.message);
+      return null;
+    }
+  }).filter(Boolean);
+
+  if (items.length === 0) {
+    alert("No valid items to process for payment.");
+    return;
+  }
+
+  const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  fetch('/order/create-order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items, totalAmount }),
+  })
+    .then(response => {
+      if (!response.ok) throw new Error(`Server error: ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      if (data.orderId) {
+        const options = {
+          key: 'RAZORPAY_KEY', // Replace with Razorpay key
+          amount: totalAmount * 100, // Convert to paise
+          currency: 'INR',
+          order_id: data.orderId,
+          handler: function(response) {
+            console.log("Payment success:", response);
+            fetch('/razorpay/payment-success', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(response),
+            }).then(() => {
+              alert('Payment Successful!');
+              window.location.href = '/';
+            });
+          },
+        };
+        const rzp = new Razorpay(options);
+        rzp.open();
+      } else {
+        alert("Failed to create payment order.");
+      }
+    })
+    .catch(error => console.error("Error creating Razorpay order:", error));
+}
+
+  function cancelCheckout() {
+    // Redirect back to the home or cart page
+    window.location.href = '/';
+  }
+</script>
+
+<%- include('../partials/footer') %> -->
+
+<%- include('../partials/header', { title: 'Place Order' }) %>
+
+<h2>Place Your Order</h2>
+
+<h3>Products:</h3>
+<ul>
+  <% products.forEach((product, index) => { %>
+    <li>
+      <strong>Product Name:</strong> <%= product.name %><br>
+      <strong>Price:</strong> $<%= product.price.toFixed(2) %><br>
+      <strong>Quantity:</strong> <%= product.quantity %>
+    </li>
+  <% }) %>
+</ul>
+
+<h3>Enter Shipping Address</h3>
+<form id="addressForm">
+  <label>Name:</label>
+  <input type="text" name="name" required><br>
+
+  <label>Mobile:</label>
+  <input type="text" name="mobile" required><br>
+
+  <label>Street Address:</label>
+  <input type="text" name="streetAddress" required><br>
+
+  <label>City:</label>
+  <input type="text" name="city" required><br>
+
+  <label>State:</label>
+  <input type="text" name="state" required><br>
+
+  <label>Postal Code:</label>
+  <input type="text" name="postalCode" required><br>
+
+  <label>Country:</label>
+  <input type="text" name="country" required><br>
+
+  <button type="button" onclick="placeOrder()">Place Order</button>
+</form>
+
+<script>
+  function placeOrder() {
+    const addressForm = document.getElementById('addressForm');
+    const formData = new FormData(addressForm);
+    const address = Object.fromEntries(formData.entries());
+
+    const items = <%- JSON.stringify(products) %>;
+    const totalAmount = <%- totalAmount %>;
+
+    fetch('/order/place', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address, items, totalAmount }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('Order placed successfully!');
+          window.location.href = '/orders';
+        } else {
+          alert('Failed to place the order.');
+        }
+      })
+      .catch(err => console.error(err));
+  }
+</script>
+
+<%- include('../partials/footer') %>

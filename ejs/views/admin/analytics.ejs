@@ -1,0 +1,14 @@
+<%- include('../partials/header', { title: 'Analytics' }) %>
+<h2>Store Analytics</h2>
+<div class="analytics-overview">
+  <p>Total Sales: $<%= analytics.totalSales.toFixed(2) %></p>
+  <p>Total Users: <%= analytics.userCount %></p>
+  <p>Total Products: <%= analytics.productCount %></p>
+  <h3>Top Categories</h3>
+  <ul>
+    <% analytics.topProducts.forEach(product => { %>
+      <li><%= product._id %>: <%= product.count %> sales</li>
+    <% }); %>
+  </ul>
+</div>
+<%- include('../partials/footer') %>

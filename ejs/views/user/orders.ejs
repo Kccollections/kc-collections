@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link rel="stylesheet" href="../stylesheets/order.css">
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+   
+</head>
+<body>
+
+    <%- include('../partials/navbar') %>
+
+    
+    
+    <div class="container">
+        
+
+      <div class="header">
+        <h1>Your Orders</h1>
+      </div>
+      <div style="display: flex; line-height: 100%; gap: 15px;">
+        <p>orders placed in year</p>
+      <!-- <select style="height: 40px; border-radius: 8px; background-color: #ffffff; border: 0.5px solid #747474; ">
+          <option value="">Select Timeline</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+      </select> -->
+      <select id="orderYearFilter" style="height: 40px; border-radius: 8px; background-color: #ffffff; border: 0.5px solid #747474;">
+        <option value="">Select Timeline</option>
+        <% availableYears.forEach(year => { %>
+            <option value="<%= year %>"><%= year %></option>
+        <% }) %>
+    </select>
+    
+    <script>
+      document.getElementById('orderYearFilter').addEventListener('change', function() {
+          const selectedYear = this.value;
+          const url = selectedYear ? `/order/my-orders?year=${selectedYear}` : '/order/my-orders';
+          window.location.href = url;
+      });
+    
+      // Set the selected year on page load
+      document.getElementById('orderYearFilter').value = "<%= selectedYear %>";
+    </script>
+    
+      </div>
+      
+        
+      <div class="section" id="active-orders">
+        <h2>Active Orders</h2>
+
+        <div class="content">
+          <% if (orders.length === 0) { %>
+            <p>You have no past orders.</p>
+          <% } else { %>
+            <% orders.forEach(order => { %>
+              <div class="order">
+                <div class="order-header">
+                  <div>Order ID: <strong>#<%= order._id %></strong></div>
+                  <div>Order placed: <strong><%= new Date(order.createdAt).toLocaleDateString() %></strong></div>
+                  <div>Expected Delivery: <strong>
+                    <% if (order.deliveryDate) { %>
+                      <%= new Date(order.deliveryDate).toLocaleDateString() %>
+                    <% } else { %>
+                      Not Available
+                    <% } %>
+                  </strong></div>
+                  <div>Total: <strong>$<%= order.totalAmount.toFixed(2) %></strong></div>
+                  <div>Ship to: <strong><%= order.address.name %>, <%= order.address.street %></strong></div>
+                </div>
+                <div class="order-items">
+                  <% order.items.forEach(item => { %>
+                    <div class="order-item">
+                      <img src="../<%= item.productId.images[0] %>" alt="<%= item.productId.name %>" />
+                      <p><strong><%= item.productId.name %></strong></p>
+                      <p>Quantity: <%= item.quantity %></p>
+                    </div>
+                  <% }) %>
+                </div>
+                <div class="order-actions">
+                  <button onclick="showOrderDetails('<%= order._id %>')">View Order Details</button>
+                  <button onclick="viewInvoice('<%= order._id %>')">Invoice</button>
+                  <button onclick="getOrderSupport('<%= order._id %>')">Get Order Support</button>
+                  <button onclick="buyItAgain('<%= order._id %>')">Buy It Again</button>
+                </div>
+              </div>
+            <% }); %>
+          <% } %>
+        </div>
+        </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+        <script>
+          // View Order Details: Redirect to an order details page
+          function showOrderDetails(orderId) {
+              // You can replace the URL with your backend route for order details
+              window.location.href = `/order-details/${orderId}`;
+          }
+      
+          // Invoice: Show the invoice for the order
+          function viewInvoice(orderId) {
+              // You can redirect to an invoice page or generate it dynamically
+              window.location.href = `/invoice/${orderId}`;
+          }
+      
+          // Get Order Support: Redirect to the support page for the specific order
+          function getOrderSupport(orderId) {
+              // Redirect to a support page with the order ID for context
+              window.location.href = `/support/${orderId}`;
+          }
+      
+          // Buy It Again: Add items from the order to the shopping cart
+          function buyItAgain(orderId) {
+      fetch(`/order-detail/${orderId}`)
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Failed to fetch order details');
+              }
+              return response.json();
+          })
+          .then(order => {
+              const items = order.items;
+              const promises = items.map(item => {
+                  return fetch('/cart/add', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                          productId: item.productId._id || item.productId,
+                          quantity: item.quantity,
+                      }),
+                  }).then(response => {
+                      if (!response.ok) {
+                          return response.text().then(errorMessage => {
+                              throw new Error(errorMessage);
+                          });
+                      }
+                  });
+              });
+  
+              return Promise.allSettled(promises);
+          })
+          .then(results => {
+              const failedItems = results.filter(result => result.status === 'rejected');
+              if (failedItems.length) {
+                  console.warn('Some items failed to add to cart:', failedItems);
+                  alert('Some items could not be added to the cart.');
+              }
+  
+              // Redirect to cart
+              window.location.href = '/cart';
+          })
+          .catch(error => {
+              console.error('Error in Buy It Again:', error);
+              alert('Failed to complete Buy It Again. Please try again.');
+          });
+  }
+  
+  
+      </script>
+      
+  
+      <%- include('../partials/footer') %>
+  

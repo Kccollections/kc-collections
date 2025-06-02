@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #d5d5d5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 20px;
+}
+.heading{
+    margin:10px;
+    margin-left: 0;
+}
+.header {
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    
+}
+
+.header-left h1 {
+    font-size: 22px;
+    color: #232f3e;
+    margin: 0;
+}
+
+.header-left p {
+   
+    font-size: 14px;
+    color: #555555;
+    margin: 5px 0 0;
+}
+
+.header-right {
+    font-size: 14px;
+    color: #0066c0;
+    display: flex;
+    align-items: center;
+}
+
+.header-right::before {
+    content: '|';
+    margin-right: 10px;
+    color: #d5d5d5;
+}
+
+.details-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.section {
+    width: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.details {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #444444;
+}
+
+.order-items {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+}
+
+.order-items img {
+    width: 120px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.order-items .item-details {
+    flex: 1;
+}
+
+.order-items .item-details p {
+    margin: 5px 0;
+    color: #333333;
+}
+
+.shop-now-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #ff9900;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.shop-now-button:hover {
+    background-color: #cc7a00;
+}
+
+.shop-now-button:active {
+    background-color: #b36b00;
+}

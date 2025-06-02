@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KC Collections</title>
+  <link rel="stylesheet" href="../stylesheets/header_styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+    <link rel="stylesheet" href="../stylesheets/login.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="KC_logo">
+        <a href="/index">
+          <img src="../images/kc.png" alt="KC Collections Logo" />
+        </a>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search your jewellery" />
+        <button id="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+        <script>
+          document.getElementById("search-button").addEventListener("click", function() {
+  const searchTerm = document.getElementById("search-input").value.trim();
+  if (searchTerm) {
+    window.location.href = `/product?search=${encodeURIComponent(searchTerm)}`;
+  }
+});
+
+        </script>
+      </div>
+      
+      <nav>
+        <a href="/index">Home</a>
+        <a href="/product">Shop</a>
+        <a  href="/contact">Contact</a>
+        <a  href="/wishlist"><i class="fas fa-heart"></i></a>
+        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        <a href="/profile"><i class="fas fa-user"></i></a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <div class="menu">
+        <a href="/index#top-picks">All Jewelry</a>
+        <a href="/index#shop-category">Gold</a>
+        <a href="/index#shop-category">Diamond</a>
+        <a href="/index#shop-category">Silver</a>
+        <a href="/index#collection-section">Wedding</a>
+        <a href="/index#collection-section">Rings</a>
+        <a href="/index#Gift">Gifting</a>
+        <a href="/index#new-for-you">More</a>
+      </div>
+    </div>
+    
+  </header>
+
+
+  
+  
+  
+  
+  <!-- Login Form -->
+  <div class="form-box">
+    <h2>Login</h2>
+    
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="error-message" style="color: #dc3545; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 14px;">
+        <%= error %>
+      </div>
+    <% } %>
+    
+    <form action="/auth/login" method="POST" id="loginForm">
+        <label for="identifier">Email address or Mobile number *</label>
+        <input type="text" name="identifier" id="identifier" placeholder="Enter your email or mobile number" required>
+
+        <div>
+          <label><input type="radio" name="authMethod" value="password" checked> Login with Password</label>
+          <label><input type="radio" name="authMethod" value="otp"> Login with OTP</label>
+        </div>
+
+        <div id="passwordLogin">
+          <label for="password">Password *</label>
+        <input type="password" name="password"  id="password" placeholder="Enter your password" >
+        </div>
+        
+
+        <div id="otpLogin" class="form-group" style="display: none;">
+          
+            <label for="otp" class="form-label">OTP *</label>
+            <div id="otpContainer">
+              <input type="text" name="otp" id="otp" class="form-input" placeholder="Enter your OTP">
+          
+          <button type="button" id="sendOtp" class="form-button">Send OTP</button>
+            </div>
+        </div>
+
+        
+
+        <div style="display: flex; align-items: center; margin-bottom: 15px; margin-top: 10px;">
+          <input type="checkbox" id="remember-me" style="margin-right: 5px; margin-top: 8px;">
+          <label for="remember-me">Remember me</label>
+      </div>
+
+      <div id="buttonContainer" >
+        <button type="submit" class="form-button">Log in</button>
+        <button type="submit" class="form-button" onclick="window.location.href='auth/register'"><a href="auth/register" style="text-decoration: none; color: inherit;">Sign Up</a></button>
+      </div>
+      
+        
+    </form>
+    
+    
+</div>
+
+
+
+
+<%- include('../partials/footer') %>
+
+<script>
+  document.querySelectorAll('[name="authMethod"]').forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      const method = e.target.value;
+      document.getElementById('passwordLogin').style.display = method === 'password' ? 'flex' : 'none';
+      document.getElementById('otpLogin').style.display = method === 'otp' ? 'flex' : 'none';
+    });
+  });
+
+  document.getElementById('sendOtp').addEventListener('click', async () => {
+  const identifier = document.getElementById('identifier').value;
+
+  // Validation functions
+  const isPhoneNumber = (input) => /^[0-9]{10}$/.test(input); // Matches exactly 10 digits
+  const isEmail = (input) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input); // Basic email format
+
+  if (!identifier) {
+    alert('Please enter your email or mobile number.');
+    return;
+  }
+
+  if (isEmail(identifier)) {
+    alert('Please enter a valid phone number to receive an OTP.');
+    return;
+  }
+
+  if (!isPhoneNumber(identifier)) {
+    alert('Please enter a valid 10-digit phone number.');
+    return;
+  }
+
+  // If valid phone number, proceed with sending OTP
+  try {
+    const response = await fetch('/auth/send-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ identifier }),
+    });
+    const data = await response.json();
+    alert(data.message || 'OTP sent successfully!');
+  } catch (error) {
+    alert('Failed to send OTP. Please try again.');
+  }
+});
+
+</script>
+
+
+
+
+

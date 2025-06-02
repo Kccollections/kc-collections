@@ -1,0 +1,45 @@
+.empty-main-content{
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.empty-wishlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+    color: #555;
+    padding: 20px;
+}
+
+.empty-wishlist img {
+    max-width: 300px;
+    margin-bottom: 20px;
+    margin: auto;
+}
+
+.empty-wishlist h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.empty-wishlist p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.empty-wishlist button {
+    background-color: #ffd700;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.empty-wishlist button:hover {
+    background-color: #f0c600;
+}

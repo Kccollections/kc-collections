@@ -1,0 +1,101 @@
+
+
+        /* Body Styling */
+        body {
+            font-family: 'Inria serif', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Offer Container */
+        .offer-container {
+            max-width: 800px;
+            margin: auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading Styles */
+        .offer-container h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #c70039;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .offer-container h2 {
+            font-size: 1.4em;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Offer Description */
+        .offer-description {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* Offer Details List */
+        .offer-details {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .offer-details li {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .offer-details li::before {
+            content: '✓';
+            color: #c70039;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2em;
+        }
+
+        /* Expiry Date */
+        .expiry-date {
+            font-size: 1.1em;
+            color: #f44336;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .offer-container {
+                padding: 20px;
+            }
+
+            .offer-container h1 {
+                font-size: 2em;
+            }
+
+            .offer-container h2 {
+                font-size: 1.2em;
+            }
+
+            .offer-description {
+                font-size: 1em;
+            }
+
+            .offer-details li {
+                font-size: 1em;
+            }
+        }
+    

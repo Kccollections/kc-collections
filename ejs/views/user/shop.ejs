@@ -1,0 +1,742 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>KC Collections</title>
+        <link rel="stylesheet" href="../stylesheets/styles.css">
+        <link rel="stylesheet" href="../stylesheets/header_styles.css">
+        <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+        <link rel="stylesheet" href="../stylesheets/product popup.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../stylesheets/shop.css">
+        <style>
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+
+      <div class="container">
+        <!-- Sidebar -->
+             <!-- Done-->
+             <aside class="sidebar">
+                <!-- Categories Section -->
+                <div class="sidebar-section">
+                    <h3>Shop by Categories</h3>
+                    <ul>
+                        <li><label><input type="checkbox" name="category" value="Gemstone"> Gemstone</label></li>
+                        <li><label><input type="checkbox" name="category" value="Chocker"> Chocker</label></li>
+                        <li><label><input type="checkbox" name="category" value="Necklace"> Necklace</label></li>
+                        <li><label><input type="checkbox" name="category" value="Cufflinks"> Cufflinks</label></li>
+                        <li><label><input type="checkbox" name="category" value="Earrings"> Earrings</label></li>
+                        <li><label><input type="checkbox" name="category" value="Chain"> Chain</label></li>
+                        <li><label><input type="checkbox" name="category" value="Rings"> Rings</label></li>
+                        <li><label><input type="checkbox" name="category" value="Gift Set"> Gift Set</label></li>
+                        <li><label><input type="checkbox" name="category" value="Pens"> Pens</label></li>
+                        <li><label><input type="checkbox" name="category" value="Sterling"> Sterling</label></li>
+                        <li><label><input type="checkbox" name="category" value="Starfish"> Starfish</label></li>
+                        <li><label><input type="checkbox" name="category" value="Pocket Square"> Pocket Square</label></li>
+                        <li><label><input type="checkbox" name="category" value="Bracelet"> Bracelet</label></li>
+                        <li><label><input type="checkbox" name="category" value="Watch"> Watch</label></li>
+                        <li><label><input type="checkbox" name="category" value="Pin"> Pin</label></li>
+                    </ul>
+                </div>
+            
+                <!-- Price Filter Section -->
+                <div class="sidebar-section">
+                    <h3>Price</h3>
+                    <input type="range" min="10" max="10000" value="10000" class="price-filter" id="priceFilter">
+                    <p>Price: <span id="priceRange">$10 - $10000</span></p>
+                </div>
+            
+                <!-- Brand Section -->
+                <div class="sidebar-section">
+                    <h3>Brand</h3>
+                    <ul>
+                        <li><label><input type="checkbox" name="brand" value="Charm"> Charm</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Retro Revival"> Retro Revival</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Eastern"> Eastern</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Forest"> Forest</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Luxer"> Luxer</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Goddess"> Goddess</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Opulence"> Opulence</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Vintage"> Vintage</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Romance"> Romance</label></li>
+                        <li><label><input type="checkbox" name="brand" value="Celestial"> Celestial</label></li>
+                    </ul>
+                </div>
+            
+                <!-- Material Section -->
+                <div class="sidebar-section">
+                    <h3>Material</h3>
+                    <ul>
+                        <li><label><input type="checkbox" name="material" value="Gold"> Gold</label></li>
+                        <li><label><input type="checkbox" name="material" value="Silver"> Silver</label></li>
+                        <li><label><input type="checkbox" name="material" value="Rose Gold"> Rose Gold</label></li>
+                        <li><label><input type="checkbox" name="material" value="Cotton"> Cotton</label></li>
+                        <li><label><input type="checkbox" name="material" value="Stone"> Stone</label></li>
+                        <li><label><input type="checkbox" name="material" value="Bones"> Bones</label></li>
+                        <li><label><input type="checkbox" name="material" value="Diamond"> Diamond</label></li>
+                        <li><label><input type="checkbox" name="material" value="White Stone"> White Stone</label></li>
+                        <li><label><input type="checkbox" name="material" value="Hematite Stone"> Hematite Stone</label></li>
+                        <li><label><input type="checkbox" name="material" value="Silver Stone"> Silver Stone</label></li>
+                    </ul>
+                </div>
+            
+                <!-- Color Section -->
+                <div class="sidebar-section">
+                    <h3>Color</h3>
+                    <ul class="color-filters">
+                        <li><label><input type="checkbox" name="color" value="Turquoise"> Turquoise</label></li>
+                        <li><label><input type="checkbox" name="color" value="White"> White</label></li>
+                        <li><label><input type="checkbox" name="color" value="Yellow"> Yellow</label></li>
+                        <li><label><input type="checkbox" name="color" value="Purple"> Purple</label></li>
+                        <li><label><input type="checkbox" name="color" value="Red"> Red</label></li>
+                        <li><label><input type="checkbox" name="color" value="Rose"> Rose</label></li>
+                        <li><label><input type="checkbox" name="color" value="Blue"> Blue</label></li>
+                        <li><label><input type="checkbox" name="color" value="Black"> Black</label></li>
+                        <li><label><input type="checkbox" name="color" value="Brown"> Brown</label></li>
+                    </ul>
+                </div>
+            
+                <!-- Rating Section -->
+                <div class="sidebar-section">
+                    <h3>Rating</h3>
+                    <ul>
+                        <li><label><input type="checkbox" name="rating" value="5"> Rated 5 out of 5</label></li>
+                        <li><label><input type="checkbox" name="rating" value="4"> Rated 4 out of 5</label></li>
+                        <li><label><input type="checkbox" name="rating" value="3"> Rated 3 out of 5</label></li>
+                        <li><label><input type="checkbox" name="rating" value="2"> Rated 2 out of 5</label></li>
+                        <li><label><input type="checkbox" name="rating" value="1"> Rated 1 out of 5</label></li>
+                    </ul>
+                </div>
+            
+                <!-- Reset Button -->
+                <div class="sidebar-section reset-section">
+                    <button id="resetAll" class="reset-button">Reset All</button>
+                </div>
+            </aside>
+    
+        <!-- Main Product Grid -->
+         
+        <div class="product-grid">
+            <div class="top_section">
+                <h1>Shop Now</h1>
+                <div class="filter-bar">
+                    <div class="sorting">
+                        <label for="sort-options">Sort</label>
+                        <select id="sort-options" onchange="applyFilters()">
+                            <option value="default">Default sorting</option>
+                            <option value="popularity">Sort by popularity</option>
+                            <option value="price-low">Sort by price: low to high</option>
+                            <option value="price-high">Sort by price: high to low</option>
+                        </select>
+                        
+                    </div>
+                    <div class="sale-filter">
+                        <input type="checkbox" id="on-sale">
+                        <label for="on-sale">Only products on sale</label>
+                    </div>
+                </div>
+            </div>
+
+            
+            <section data-section="best-seller" class="section best-seller" id="best-seller-section">
+                <div class="products">
+                    <% products.forEach((product, index) => { %>
+                        <div class="product-card">
+                            <i class="wish far fa-heart" onclick="toggleHeart(this); addToWishlist('<%= product._id %>')"></i><i class="eye far fa-eye"
+                                onclick="toggleEye(this), openModal('<%=product.name%>', '<%=product.price%>', '../<%= product.images[0] %>', '<%=product.description%>', '<%=product.category%>', '<%=product._id%>','<%=product.rating || 0%>', '<%=product.reviews || 0%>')">
+                            </i>
+    
+    
+                        <% if (product.images && Array.isArray(product.images) && product.images.length > 0) { %>
+                        <img src="../<%= product.images[0] %>" alt="<%=product.name%>" class="product-img" onclick="navigateToProduct('/product/<%=product._id%>')">
+                        <% } else { %>
+                            <img src="../default-image.png" alt="Default Image" class="product-img">
+                        <% } %>
+                        <h4 class="product-title" onclick="navigateToProduct('/product/<%=product._id%>')"><%=product.name%></h4>
+                        <p class="product-price" onclick="navigateToProduct('/product/<%=product._id%>')"><%=product.price%></p>
+
+                        <div class="product-rating">
+                            <% 
+                                        const rating = product.rating || 0; // Assuming rating is between 0 and 5
+                                        const maxStars = 5; 
+                                    %>
+                                    <span class="rating-stars">
+                                        <% for (let i = 1; i <= maxStars; i++) { %>
+                                            <% if (i <= rating) { %>
+                                                ⭐
+                                            <% } else { %>
+                                                ☆
+                                            <% } %>
+                                        <% } %>
+                                        <br>
+                                        <span class="rating-count">(<%= product.reviews || 0 %> Reviews)</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('<%= product._id %>', 1)">Add to Cart</button>
+                        
+                            
+                    </div>
+
+
+                    <div class="modal" id="productModal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 id="modalTitle"><%= product.name %></h2>
+                                
+                                <button class="close-modal" onclick="closeModal()">✖</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-image">
+                                    <img id="modalImage" src="../images/ring3.webp" alt="Product">
+                                </div>
+                                <div class="modal-details">
+                                    <div class="modal-rating">
+                                        <%='⭐'.repeat(product.rating || 0)%><%='☆'.repeat(5 - (product.rating || 0))%>
+                                            <br>
+                                            <span class="rating-count">(<%=product.reviews || 0%> Reviews)</span>
+                                       <% product.rating %>
+                                    </div>
+                                    <div class="modal-meta">
+                                        <span><strong>SKU:</strong> BIA800</span> |
+                                        <span><strong>Category:</strong><%= product.category %></span>
+                                    </div>
+                                    <p id="modalPrice"><%= product.price %></p>
+                                    <p class="product-description">
+                                        <%= product.description %>
+                                    </p>
+                                    <div class="modal-actions">
+                                        <div class="quantity-controls">
+                                            <button class="quantity-decrease" onclick="updateQuantity(-1)">-</button>
+                                            <input type="number" value="1" min="1" class="quantity-input">
+                                            <button class="quantity-increase" onclick="updateQuantity(1)">+</button>
+                                        </div>
+                                        <button class="add-to-cart" onclick="addToCart('<%= product._id %>', 1)">Add to Cart</button>
+                                        <button class="buy-now" onclick="buyNow('<%= product._id %>', '<%= product.price %>')">
+                                            <i class="fa fa-credit-card"></i> Buy Now
+                                        </button>
+                                        
+                                        <script>
+                                            // Function to update the quantity input
+                                            function updateQuantity(change) {
+                                                const quantityInput = document.querySelector('.quantity-input');
+                                                const currentQuantity = parseInt(quantityInput.value) || 1;
+                                                const newQuantity = Math.max(1, currentQuantity + change); // Ensure minimum quantity is 1
+                                                quantityInput.value = newQuantity;
+                                            }
+                                        
+                                            function buyNow(productId, price) {
+    const modal = document.getElementById('productModal'); // Scope to the modal
+    const quantityInput = modal.querySelector('.quantity-input'); // Ensure correct input field
+    const quantity = parseInt(quantityInput.value) || 1;
+
+    // Prepare the data for the query parameters
+    const totalProducts = 1;
+    const totalAmount = price * quantity;
+
+    // Create productQuantities as an object
+    const productQuantities = JSON.stringify({ [productId]: quantity });
+
+    // Create productIds as an array (still required for consistency)
+    const productIds = JSON.stringify([productId]);
+    
+    // Redirect to the address page
+    window.location.href = `/address/?totalProducts=${totalProducts}&totalAmount=${totalAmount}&productIds=${encodeURIComponent(productIds)}&productQuantities=${encodeURIComponent(productQuantities)}`;
+}
+
+                                        </script>
+                             
+                                    </div>
+                                    <div class="wishlist">
+                                        <i class="wish far fa-heart" onclick="toggleHeart(this); addToWishlist('<%= product._id %>')"></i> Add to Wishlist
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+
+
+                <script>
+                    // Script for handling search, category, collection, and release filters
+                    const urlParams = new URLSearchParams(window.location.search);
+                  
+                    const searchQuery = urlParams.get('search');
+                    if (searchQuery) {
+                      // Use searchQuery to filter products or display relevant content
+                      console.log("Search query:", searchQuery);
+                    }
+                  
+                    const category = urlParams.get('category');
+                    if (category) {
+                      // Use category to filter products or display relevant content
+                      console.log("Selected category:", category);
+                    }
+                  
+                    const collection = urlParams.get('collection');
+                    if (collection) {
+                      // Use the 'collection' value to filter products or show relevant content
+                      console.log("Selected collection:", collection);
+                    }
+                  
+                    const release = urlParams.get('release');
+                    if (release) {
+                      // Use the 'release' value to filter products or show relevant content
+                      console.log("Selected release:", release);
+                    }
+                  </script>
+
+
+                <script>
+                    document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+                        checkbox.addEventListener('change', applyFilters);
+                    });
+                    
+                    document.getElementById('priceFilter').addEventListener('input', (event) => {
+                        document.getElementById('priceRange').innerText = `$10 - $${event.target.value}`;
+                        applyFilters();
+                    });
+                    
+                    document.getElementById('resetAll').addEventListener('click', () => {
+                        document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => checkbox.checked = false);
+                        document.getElementById('priceFilter').value = 10000;
+                        document.getElementById('priceRange').innerText = '$10 - $10000';
+                        applyFilters();
+                    });
+                    
+                    
+                    function applyFilters() {
+                        const filters = {
+                            categories: Array.from(document.querySelectorAll('input[name="category"]:checked')).map(el => el.value),
+                            brands: Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(el => el.value),
+                            materials: Array.from(document.querySelectorAll('input[name="material"]:checked')).map(el => el.value),
+                            colors: Array.from(document.querySelectorAll('input[name="color"]:checked')).map(el => el.value),
+                            price: document.getElementById('priceFilter').value,
+                            ratings: Array.from(document.querySelectorAll('input[name="rating"]:checked')).map(el => parseInt(el.value, 10)),
+                            sort: document.getElementById('sort-options').value,
+                            sale: document.getElementById('on-sale').checked,
+                            search: document.getElementById('search-input').value.trim() // Add search term to filters
+
+                        };
+
+                        fetch('/product/filter-products', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(filters)
+                        })
+                        .then((response) => response.json())
+                        .then((filteredProducts) => {
+                            document.querySelectorAll('.section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById('best-seller-section').classList.remove('hidden');
+                            const productsContainer = document.querySelector('.best-seller .products');
+                            productsContainer.innerHTML = ''; // Clear current products
+                    
+                            filteredProducts.forEach((product) => {
+                                productsContainer.innerHTML += `
+                                    <div class="product-card">
+                                        <i class="wish far fa-heart" onclick="toggleHeart(this); addToWishlist('${product._id}')"></i>
+                                        <i class="eye far fa-eye" 
+                                            data-title="${product.name}"
+                                            data-price="${product.price}"
+                                            data-image="${product.images[0]}"
+                                            data-description="${product.description}"
+                                            data-category="${product.category}"
+                                            data-id="${product._id}"
+                                            data-rating="${product.rating || 0}" 
+                                            data-reviews="${product.reviews || 0}"
+                                            onclick="openModal(
+                                                '${product.name}', 
+                                                '${product.price}', 
+                                                '../${product.images[0]}', 
+                                                '${product.description}', 
+                                                '${product.category}', 
+                                                '${product._id}', 
+                                                ${product.rating || 0}, 
+                                                ${product.reviews || 0}
+                                            )">
+                                        </i>
+                                        <img src="../${product.images[0] || 'default-image.png'}" alt="${product.name}" class="product-img" onclick="navigateToProduct('/product/${product._id}')">
+                                        <h4 class="product-title" onclick="navigateToProduct('/product/${product._id}')">${product.name}</h4>
+                                        <p class="product-price" onclick="navigateToProduct('/product/${product._id}')">${product.price}</p>
+                                        <div class="product-rating">
+                                            ${'⭐'.repeat(product.rating || 0)}${'☆'.repeat(5 - (product.rating || 0))}
+                                            <br>
+                                            <span class="rating-count">(${product.reviews || 0} Reviews)</span>
+                                        </div>
+                                        <button class="add-to-cart" onclick="addToCart('${product._id}', 1)">Add to Cart</button>
+                                    </div>
+                                    <div class="modal" id="productModal">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h2 id="modalTitle">${product.title}</h2>
+                                                <button class="close-modal" onclick="closeModal()">✖</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="modal-image" id="modalImage">
+                                                <img src="../${product.images[0]}" alt="${product.name}" id="modalImage">
+                                                </div>
+
+                                                <div class="modal-details">
+                                                <div class="modal-rating">
+                                                    ${[...Array(5)].map((_, i) => i < (product.rating || 0) ? '⭐' : '☆').join('')}
+                                                    <br>
+                                                    <span class="rating-count">(${product.reviews || 0} Reviews)</span>
+                                                </div>
+
+
+                                    <div class="modal-meta">
+                                        <span><strong>SKU:</strong> BIA800</span> |
+                                        <span><strong>Category:</strong>${product.category}</span>
+                                    </div>
+                                      <p id="modalPrice">${ product.price}></p>
+                                    <p class="product-description">
+                                        ${product.description}
+                                    </p>
+                                    <div class="modal-actions">
+                                        <div class="quantity-controls">
+                                            <button class="quantity-decrease">-</button>
+                                            <input type="number" value="1" min="1" class="quantity-input">
+                                            <button class="quantity-increase">+</button>
+                                        </div>
+                                        <button class="add-to-cart" onclick="addToCart('${ product._id}', 1)">Add to Cart</button>
+                                        <button class="buy-now" onclick="buyNow('${ product._id}')">
+                                            <i class="fa fa-credit-card"></i> Buy Now
+                                        </button>
+                                        </div>
+                                    <div class="wishlist">
+                                        <i class="wish far fa-heart" onclick="toggleHeart(this); addToWishlist('${product._id}')"></i> Add to Wishlist
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                `;
+                            });
+
+                            // Re-attach event listeners for dynamically generated elements
+                            document.querySelectorAll('.eye').forEach((eyeIcon) => {
+                                eyeIcon.addEventListener('click', (event) => {
+                                    const target = event.target;
+                                    openModal(target.dataset.title, target.dataset.price, target.dataset.image, target.dataset.description, target.dataset.category, target.dataset.id);
+                                });
+                            });
+                        })
+                        .catch((error) => console.error('Error fetching products:', error));
+                    }
+
+                    </script>
+                <script>
+                    function toggleHeart(element) {
+                        element.classList.toggle('far');
+                        element.classList.toggle('fas');
+                        element.style.color = element.classList.contains('fas') ? '#ff4d4d' : '#000';
+                        element.style.position = 'relative'; element.style.top = '-10px'; element.style.right = '-95px'; element.style.fontSize = '14px';
+                    }
+                    function toggleEye(element) {
+                        element.classList.toggle('far');
+                        element.classList.toggle('fas');
+                    }
+                
+                   // Open modal with product details
+                   function openModal(title, price, image, description, category, productId, rating, reviews) {
+                        const modal = document.getElementById('productModal');
+                        if (!modal) {
+                            alert('Modal is not available');
+                            return;
+                        }
+
+                        // Set modal content
+                        modal.querySelector('#modalTitle').textContent = title;
+                        modal.querySelector('#modalPrice').textContent = `₹${price}`;
+                        modal.querySelector('#modalImage').src = image;
+                        modal.querySelector('.modal-meta span:last-child').textContent = `Category: ${category}`;
+                        modal.querySelector('.product-description').textContent = description;
+
+                        // Set rating dynamically
+                        const maxStars = 5;
+                        const ratingStars = '⭐'.repeat(rating) + '☆'.repeat(maxStars - rating);
+                        modal.querySelector('.modal-rating').innerHTML = `
+                            ${ratingStars}<br>
+                            <span class="rating-count">(${reviews || 0} Reviews)</span>
+                        `;
+
+                        currentProductId = productId;
+                        console.log(currentProductId);
+
+                        modal.style.display = 'flex';
+                    }
+                    // Close modal
+                    function closeModal() {
+                        document.getElementById('productModal').style.display = 'none';
+                    }
+                    function navigateToProduct(url) { window.location.href = url; }
+                </script>
+
+            </section>
+
+
+
+            <script>
+                function addToWishlist(productId) {
+                    fetch('/wishlist/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId: productId })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Product added to wishlist successfully!');
+                        } else {
+                            console.log('Failed to add product to wishlist.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error adding to wishlist:', error);
+                    });
+                }
+            
+            
+                function addToCart(productId, quantity) {
+                        fetch('/cart/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ productId: productId, quantity: quantity })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('Product added to cart successfully!');
+                            } else {
+                                alert('Failed to add product to cart.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error adding to cart:', error);
+                        });
+                    }
+
+                </script>
+
+            
+            
+
+            <hr class="separator-line">
+    
+
+
+
+            <!-- To Be Checked -->
+            <!-- Featured Products Section -->
+            <section class="featured-products section" id="other-section-1" data-section="featured-products">
+                <h2>Featured Products</h2>
+                <div class="products">
+                    <% products.filter(product => product.attentionLevel === 'High').forEach((product, index) => { %>
+                        <div class="product-card <%= index >= 6 ? 'hidden' : '' %>">
+                            <i class="wish far fa-heart" onclick="toggleHeart(this); addToWishlist('<%= product._id %>')"></i>
+                            <i class="eye far fa-eye" onclick="toggleEye(this), openModal('<%= product.name %>', '<%= product.price %>', '../<%= product.images[0] %>', '<%= product.description %>', '<%= product.category %>', '<%= product._id %>')"></i>
+                            
+                            <% if (product.images && Array.isArray(product.images) && product.images.length > 0) { %>
+                                <img src="../<%= product.images[0] %>" alt="<%= product.name %>" class="product-img" onclick="navigateToProduct('/product/<%=product._id%>')">
+                            <% } else { %>
+                                <img src="../default-image.png" alt="Default Image" class="product-img">
+                            <% } %>
+                            <h4 class="product-title" onclick="navigateToProduct('product-list.ejs')"><%= product.name %></h4>
+                            <p class="product-price" onclick="navigateToProduct('product-list.ejs')"><%= product.price %></p>
+            
+                            <div class="product-rating">
+                                <% 
+                                    const rating = product.rating || 0; // Assuming rating is between 0 and 5
+                                    const maxStars = 5; 
+                                %>
+                                <span class="rating-stars">
+                                    <% for (let i = 1; i <= maxStars; i++) { %>
+                                        <% if (i <= rating) { %>
+                                            ⭐
+                                        <% } else { %>
+                                            ☆
+                                        <% } %>
+                                    <% } %>
+                                    <br>
+                                    <span class="rating-count">(<%= product.reviews || 0 %> Reviews)</span>
+                                </span>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('<%= product._id %>', 1)">Add to Cart</button>
+                        </div>
+                    <% }); %>
+                </div>
+            </section>
+
+
+
+            <div class="shop-by-section">
+                <h2>Explore Our Collections</h2>
+                <div class="shop-by-cards">
+                  <div class="shop-by-card">
+                    <img src="../images/Gold_bangles-removebg-preview.png" alt="Bracelet" class="shop-by-image">
+                    <h3>Bracelets</h3>
+                    <p>Explore our exclusive bracelet collection.</p>
+                    <button class="shop-by-btn" onclick="filterByCollection('Bracelet')">Shop Now</button>
+                  </div>
+                  <div class="shop-by-card">
+                    <img src="../images/OIP_6-removebg-preview.png" alt="Ring" class="shop-by-image">
+                    <h3>Rings</h3>
+                    <p>Discover elegant and timeless rings.</p>
+                    <button class="shop-by-btn" onclick="filterByCollection('Ring')">Shop Now</button>
+                  </div>
+                  <div class="shop-by-card">
+                    <img src="../images/OIP_4-removebg-preview.png" alt="Necklace" class="shop-by-image">
+                    <h3>Necklaces</h3>
+                    <p>Check out our stylish necklace designs.</p>
+                    <button class="shop-by-btn" onclick="filterByCollection('Necklace')">Shop Now</button>
+                  </div>
+                </div>
+              </div>
+              
+              <script>
+                // Redirect to the product page with the selected collection
+                function filterByCollection(collection) {
+                  const searchTerm = document.getElementById("search-input").value.trim();
+                  const url = new URL(window.location.origin + '/product');
+                  if (searchTerm) url.searchParams.set('search', searchTerm);
+                  url.searchParams.set('search', collection); // Add the selected collection as a category
+                  window.location.href = url.href; // Redirect to the filtered product page
+                }
+              </script>
+              
+            <hr class="separator-line">
+
+            <!-- To Be Checked -->
+    <!-- New Arrivals Section -->
+    <section class="new-arrivals section" id="other-section-2" data-section="new-arrivals">
+        <h2>New Arrivals</h2>
+        <div class="products" id="productList">
+            <% 
+                // Reverse the products array to start from the last product
+                const reversedProducts = [...products].reverse(); 
+            %>
+            <% reversedProducts.forEach((product, index) => { %>
+                <div class="product-card <%= index >= 6 ? 'hidden' : '' %>">
+                    <i class="wish far fa-heart" onclick="toggleHeart(this); addToWishlist('<%= product._id %>')"></i>
+                    <i class="eye far fa-eye" onclick="toggleEye(this), openModal('<%= product.name %>', '<%= product.price %>', '../<%= product.images[0] %>', '<%= product.description %>', '<%= product.category %>', '<%= product._id %>')"></i>
+                    
+                    <% if (product.images && Array.isArray(product.images) && product.images.length > 0) { %>
+                        <img src="../<%= product.images[0] %>" alt="<%= product.name %>" class="product-img" onclick="navigateToProduct('/product/<%=product._id%>')">
+                    <% } else { %>
+                        <img src="../default-image.png" alt="Default Image" class="product-img">
+                    <% } %>
+                    <h4 class="product-title" onclick="navigateToProduct('product-list.ejs')"><%= product.name %></h4>
+                    <p class="product-price" onclick="navigateToProduct('product-list.ejs')"><%= product.price %></p>
+        
+                    <div class="product-rating">
+                        <% 
+                            const rating = product.rating || 0; // Assuming rating is between 0 and 5
+                            const maxStars = 5; 
+                        %>
+                        <span class="rating-stars">
+                            <% for (let i = 1; i <= maxStars; i++) { %>
+                                <% if (i <= rating) { %>
+                                    ⭐
+                                <% } else { %>
+                                    ☆
+                                <% } %>
+                            <% } %>
+                            <br>
+                            <span class="rating-count">(<%= product.reviews || 0 %> Reviews)</span>
+                        </span>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('<%= product._id %>', 1)">Add to Cart</button>
+                </div>
+            <% }); %>           
+        </div>
+        </section>
+        
+
+    
+
+    <hr class="separator-line">
+    <section class="offer-section section" id="other-section-2" data-section="offer-section">
+        <% if (activeOffers && activeOffers.length > 0) { %>
+            <% activeOffers.forEach((offer) => { %>
+                <div class="offer-wrapper">
+                    <h2><%= offer.title %></h2>
+                    <p class="offer-description"><%= offer.description %></p>
+                    <div class="products" id="productList">
+                        <% offer.applicableProducts.forEach((product) => { %>
+                            <div class="product-card">
+                                <i class="wish far fa-heart" onclick="toggleHeart(this); addToWishlist('<%= product._id %>')"></i>
+                                <i class="eye far fa-eye" 
+                                    onclick="toggleEye(this), openModal('<%= product.name %>', '<%= product.price %>', '../<%= product.images[0] %>', '<%= product.description %>', '<%= product.category %>', '<%= product._id %>')"></i>
+                                
+                                <% if (product.images && Array.isArray(product.images) && product.images.length > 0) { %>
+                                    <img src="../<%= product.images[0] %>" alt="<%= product.name %>" class="product-img" onclick="navigateToProduct('/product/<%= product._id %>')">
+                                <% } else { %>
+                                    <img src="../default-image.png" alt="Default Image" class="product-img">
+                                <% } %>
+                                <h4 class="product-title" onclick="navigateToProduct('/product/<%= product._id %>')"><%= product.name %></h4>
+                                <p class="product-price">$<%= product.price %></p>
+        
+                                <div class="product-rating">
+                                    <% 
+                                        const rating = product.rating || 0; // Assuming rating is between 0 and 5
+                                        const maxStars = 5; 
+                                    %>
+                                    <span class="rating-stars">
+                                        <% for (let i = 1; i <= maxStars; i++) { %>
+                                            <% if (i <= rating) { %>
+                                                ⭐
+                                            <% } else { %>
+                                                ☆
+                                            <% } %>
+                                        <% } %>
+                                    </span>
+                                    <span class="rating-count">(<%= product.reviews || 0 %> Reviews)</span>
+                                </div>
+                                <button class="add-to-cart" onclick="addToCart('<%= product._id %>', 1)">Add to Cart</button>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <h2>No Active Offers</h2>
+            <p>Currently, there are no active offers. Please check back later!</p>
+            <hr class="separator-line">
+        <% } %>
+    </section>
+    
+        </div>
+    </div>
+
+    
+
+    <!-- Done-->
+    <!-- Pagination -->
+    <div class="pagination">
+        <a href="#" class="pagination-link">&laquo; Prev</a>
+        <a href="#" class="pagination-link active">1</a>
+        <a href="#" class="pagination-link">2</a>
+        <a href="#" class="pagination-link">3</a>
+        <a href="#" class="pagination-link">Next &raquo;</a>
+    </div>
+
+
+</div>
+
+
+
+<%- include('../partials/footer') %> 

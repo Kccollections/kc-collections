@@ -1,0 +1,108 @@
+<header>
+    <div class="header-container">
+      <div class="KC_logo">
+        <a href="/index">
+          <img src="../images/kc.png" alt="KC Collections Logo" />
+        </a>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search your jewellery"  />
+        <button id="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+        <button id="clear-button" style="display: none;">
+          <i class="fas fa-times"></i>
+        </button>
+        
+        <script>
+          const searchInput = document.getElementById("search-input");
+          const clearButton = document.getElementById("clear-button");
+        
+          // Check URL parameters on page load
+          window.addEventListener("load", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get("search") || urlParams.get("category"); // Handle 'search' or 'category'
+            if (searchTerm) {
+              searchInput.value = decodeURIComponent(searchTerm);
+              clearButton.style.display = "inline"; // Show the clear button
+            }
+          });
+        
+          // Show the clear button if input is not empty
+          searchInput.addEventListener("input", function () {
+            if (searchInput.value.trim() !== "") {
+              clearButton.style.display = "inline"; // Show clear button when input is not empty
+            } else {
+              clearButton.style.display = "none"; // Hide clear button when input is empty
+            }
+          });
+        
+          // Search button click handler
+          document.getElementById("search-button").addEventListener("click", function () {
+            handleSearch();
+          });
+        
+          // Enable "Enter" key for search
+          searchInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              handleSearch();
+            }
+          });
+        
+          // Clear button click handler
+          clearButton.addEventListener("click", function () {
+            searchInput.value = ""; // Clear input field
+            clearButton.style.display = "none"; // Hide the clear button
+            window.location.href = "/product"; // Show all products
+          });
+        
+          // Search function
+          function handleSearch() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+              window.location.href = `/product?search=${encodeURIComponent(searchTerm)}`;
+            } else {
+              window.location.href = "/product"; // If no search term, show all products
+            }
+          }
+        </script>        
+        
+      </div>
+      
+      
+      <nav>
+        <a  class="<%= page === 'index' ? 'active' : '' %>" href="/index">Home</a>
+        <a class="<%= page === 'shop' ? 'active' : '' %>" href="/product">Shop</a>
+        <a class="<%= page === 'contact' ? 'active' : '' %>" href="/contact">Contact</a>
+        <a class="<%= page === 'wishlist' ? 'active' : '' %>" href="/wishlist"><i class="fas fa-heart"></i></a>
+        <a class="<%= page === 'cart' ? 'active' : '' %>" href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        <a class="<%= page === 'profile' ? 'active' : '' %>" href="/profile"><i class="fas fa-user"></i></a>
+      </nav>
+      
+    </div>
+    <div class="menu-bar">
+      <div class="menu">
+        <a href="#" onclick="filterByCollection('All Jewelry')">All Jewelry</a>
+        <a href="#" onclick="filterByCollection('gold')">Gold</a>
+        <a href="#" onclick="filterByCollection('diamond')">Diamond</a>
+        <a href="#" onclick="filterByCollection('silver')">Silver</a>
+        <a href="#" onclick="filterByCollection('wedding')">Wedding</a>
+        <a href="#" onclick="filterByCollection('ring')">Rings</a>
+        <a href="/index#Gift">Gifting</a>
+        <a href="#" onclick="filterByCollection('All Jewelry')">More</a>
+      </div>
+    </div>
+
+
+    <script>
+      // Redirect to the product page with the selected collection
+      function filterByCollection(collection) {
+        const searchTerm = document.getElementById("search-input").value.trim();
+        const url = new URL(window.location.origin + '/product');
+        if (searchTerm) url.searchParams.set('search', searchTerm);
+        url.searchParams.set('search', collection); // Add the selected collection as a category
+        window.location.href = url.href; // Redirect to the filtered product page
+      }
+    </script>
+    
+  </header>

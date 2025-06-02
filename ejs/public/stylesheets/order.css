@@ -1,0 +1,133 @@
+body {
+    font-family: serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 20px;
+    
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 10px;
+    margin-left: 0;
+    
+}
+
+.search {
+    
+    width: 900px;
+    padding: 10px;
+    margin-bottom: 10px;
+   
+}
+
+.search input,
+.search select {
+    width: 850px;
+    height: 40px;
+    padding-left: 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+}
+.search button{
+    background: none;
+    border: none;
+    position: absolute; /* Position button inside the input field */
+    right: 170px; /* Align it to the right edge of the input */
+    top: 160px;
+    cursor: pointer;
+    
+    
+}
+
+
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.order {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.order-header div {
+    font-size: 14px;
+    color: #555;
+}
+
+.order-items {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.order-items img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.order-details {
+    flex: 1;
+}
+
+.order-actions {
+    margin-top: 10px;
+}
+
+.order-actions button {
+    background-color: #f0c14b;
+    border: 1px solid #a88734;
+    color: #111;
+    padding: 8px 12px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.order-actions button:hover {
+    background-color: #ddb347;
+}
+
+.archive-link {
+    font-size: 12px;
+    color: #007185;
+    cursor: pointer;
+}
+
+.archive-link:hover {
+    text-decoration: underline;
+}

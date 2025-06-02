@@ -1,0 +1,15 @@
+
+    <div class="sidebar">
+        <h2>My Account</h2>
+        <ul class="menu">
+            <li id="Dashboard" class="<%= page === 'profile' ? 'active' : '' %>"><a href="/profile"><i class="fas fa-user"></i> Dashboard</a></li>
+            <li id="Wishlist" class="<%= page === 'wishlist' ? 'active' : '' %>"><a href="/wishlist"><i class="fas fa-heart"></i> Wishlist</a></li>
+            <li id="Orders" class="<%= page === 'order' ? 'active' : '' %>"><a href="/order/my-orders"><i class="fas fa-shopping-bag"></i> Orders</a></li>
+
+            <li id="Addresses" class="<%= page === 'address' ? 'active' : '' %>"><a href="/address/user"><i class="fas fa-map-marker-alt"></i> Addresses</a></li>
+            <li id="Account details" class="<%= page === 'account' ? 'active' : '' %>"><a href="/user/account"><i class="fas fa-user"></i> Account details</a></li>
+
+            <li id="Log out"><a href="/auth/logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+        </ul>
+    </div>
+    

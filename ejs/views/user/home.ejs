@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KC Collections</title>
+  <link rel="stylesheet" href="../stylesheets/styles.css" />
+  <link rel="stylesheet" href="../stylesheets/header_styles.css">
+  <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <header>
+
+    <%- include('../partials/navbar') %>
+
+      <!-- <div class="slider"> -->
+        <div class="slider">
+          <div class="slides">
+            <% slides.forEach((slide, index) => { %>
+              <div class="slide" style="display: '<%= index === 0 ? 'block' : 'none' %>';">
+                <img src="<%= slide.img %>" alt="<%= slide.alt %>" onclick="openProdects('<%=slide.link%>')" />
+                <div class="<%= index % 2 === 0 ? 'text3' : 'text2' %>">
+                  <h1>
+                    <%= slide.title %>
+                  </h1>
+                  <p>
+                    <%= slide.description %>
+                  </p>
+                  <button onclick="openProdects('<%=slide.link%>')">Shop Now</button>
+                  <script>
+                    function openProdects(searchTerm) {
+                      if (searchTerm) {
+                        window.location.href = `/product?search=${encodeURIComponent(searchTerm)}`;
+                      } else {
+                        window.location.href = '/product'; // If no search term, show all products
+                      }
+                    }
+                  </script>
+                  
+                </div>
+              </div>
+            <% }) %>
+          </div>
+          <div class="dots">
+            <% slides.forEach((_, index) => { %>
+              <span class="dot <%= index === 0 ? 'active' : '' %>"></span>
+            <% }) %>
+          </div>
+          <div class="navigation">
+            <a href="#" class="prev">&#10094;</a>
+            <a href="#" class="next">&#10095;</a>
+          </div>
+        </div>
+
+      </div>
+  </header>
+
+  <script>
+    let currentIndex = 0;
+    const interval = 5000; // Slide change interval in milliseconds
+  
+    function showSlides(step = 0) {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+  
+      // Update the current index based on the navigation step
+      currentIndex += step;
+      if (currentIndex >= slides.length) currentIndex = 0;
+      if (currentIndex < 0) currentIndex = slides.length - 1;
+  
+      // Display the current slide and highlight the corresponding dot
+      slides.forEach((slide, index) => {
+        slide.style.display = index === currentIndex ? 'block' : 'none';
+        dots[index].classList.toggle('active', index === currentIndex);
+      });
+    }
+  
+    // Automatically change slides
+    function autoShowSlides() {
+      showSlides(1); // Move to the next slide
+      setTimeout(autoShowSlides, interval);
+    }
+  
+    // Add event listeners for navigation arrows
+    document.querySelector('.prev').addEventListener('click', (e) => {
+      e.preventDefault();
+      showSlides(-1); // Navigate to the previous slide
+    });
+  
+    document.querySelector('.next').addEventListener('click', (e) => {
+      e.preventDefault();
+      showSlides(1); // Navigate to the next slide
+    });
+  
+    // Initialize the slider
+    showSlides(); // Show the first slide
+    setTimeout(autoShowSlides, interval); // Start auto-sliding
+  </script>
+  
+
+  </header>
+
+
+
+  <main>
+    <div class="container">
+      <!-- Top Picks Section -->
+      <section class="top-picks" id="top-picks">
+        <h2>Top Picks</h2>
+        <p>Top picks of the Season</p>
+        <img src="../images/Section line.png" class="section-line">
+        <div class="top-picks-wrapper" >
+          <button class="scroll-btn scroll-left" id="scrollLeft">&#10094;</button>
+          <div class="top-picks-carousel" id="topPicksCarousel">
+              <% products.filter(product => product.attentionLevel === 'High').forEach(product => { %>
+                  <div class="item">
+                      <% if (product.images && Array.isArray(product.images) && product.images.length > 0) { %>
+                          <img src="<%= product.images[0] %>" alt="<%= product.name %>">
+                      <% } else { %>
+                          <img src="/images/default-image.png" alt="Default Image">
+                      <% } %>
+                      <p><%= product.name %></p>
+                      <span>
+                          ₹<%= product.price || product.startingPrice %> 
+                          <% if (product.startingPrice && product.startingPrice > product.price) { %>
+                              <del>₹<%= product.startingPrice %></del> 
+                              <strong><%= Math.round(((product.startingPrice - product.price) / product.startingPrice) * 100) %>% OFF</strong>
+                          <% } %>
+                      </span>
+                  </div>
+              <% }); %>
+          </div>
+          <button class="scroll-btn scroll-right" id="scrollRight">&#10095;</button>
+        </div>
+    </section>
+    
+      <!-- Shop By Category Section -->
+      <section class="shop-category" id="shop-category">
+        <h2>Shop By Category</h2>
+        <p>Browse your favourite</p>
+        <img src="../images/Section line.png" class="section-line">
+        <div class="categories" id="categories-container"></div>
+      </section>
+      
+      <script>
+        async function loadCategoriesWithProducts() {
+          try {
+            const response = await fetch('/product/categories-with-products'); // API endpoint
+            const data = await response.json();
+      
+            const container = document.getElementById('categories-container');
+            container.innerHTML = ''; // Clear existing content
+      
+            data.forEach(({ category, product }) => {
+              const categoryItem = document.createElement('div');
+              categoryItem.classList.add('category-item');
+              categoryItem.setAttribute('onclick', `redirectToCategory('${category}')`);
+              categoryItem.innerHTML = `
+                <a href="javascript:void(0);" class="explore-link">
+                  <img src="${product.images[0]}" alt="${category}" />
+                  <p>${category}</p>
+                  <span>Explore Now</span>
+                </a>
+              `;
+              container.appendChild(categoryItem);
+            });
+          } catch (error) {
+            console.error('Error loading categories with products:', error);
+          }
+        }
+      
+        // Redirect to the product page with the selected category
+        function redirectToCategory(category) {
+          const searchTerm = document.getElementById("search-input").value.trim();
+          const url = new URL(window.location.origin + '/product');
+          if (searchTerm) url.searchParams.set('search', searchTerm);
+          url.searchParams.set('category', category); // Add the selected category as a query parameter
+          window.location.href = url.href; // Redirect to the filtered product page
+        }
+      
+        // Call the function to load categories with representative products
+        document.addEventListener('DOMContentLoaded', loadCategoriesWithProducts);
+      </script>
+      
+      
+
+      
+      <section class="collection-section" id="collection-section">
+        <h2 class="section-title">Shop By Collection</h2>
+        <p class="section-subtitle">Beautiful jewelry for your exclusive occasions</p>
+        <img src="../images/Section line.png" class="section-line">
+        <div class="collection-container">
+          <div class="collection-card">
+            <img src="../images/Intersect12.png" alt="Wedding Rings">
+            <h3>Wedding Rings</h3>
+            <a class="explore-btn" onclick="filterByCollection('Wedding Rings')">Shop Now</a>
+          </div>
+          <div class="collection-card">
+            <img src="../images/Intersect-8.png" alt="Jhumka">
+            <h3>Jhumka</h3>
+            <a class="explore-btn" onclick="filterByCollection('Jhumka')">Shop Now</a>
+          </div>
+          <div class="collection-card">
+            <img src="../images/Intersect-9.png" alt="Bracelets">
+            <h3>Bracelets</h3>
+            <a href="#" class="explore-btn" onclick="filterByCollection('Bracelet')">Shop Now</a>
+          </div>
+        </div>
+      </section>
+      
+      
+      
+      
+
+
+      <div class="banner" id="Gift">
+        <img src="../images/Gift hamper.png" alt="Gift Banner" class="banner-image">
+        <div class="banner-content">
+          <h1>Gift For Your Loved Ones</h1>
+          <p>Just Starting from ₹9,999</p>
+          <a href="#" class="button" onclick="gift('gifts')">Explore Now!</a>
+        </div>
+        <script>
+          // Redirect to the product page with the selected collection
+          function gift(gifts) {
+            const searchTerm = document.getElementById("search-input").value.trim();
+            const url = new URL(window.location.origin + '/product');
+            if (searchTerm) url.searchParams.set('search', searchTerm);
+            url.searchParams.set('search', gifts); // Add the selected collection as a category
+            window.location.href = url.href; // Redirect to the filtered product page
+          }
+        </script>
+      </div>
+
+      <section class="new-for-you" id="new-for-you">
+        <h2 class="new-for-you-title">New For You</h2>
+        <p class="new-for-you-subtitle">Our latest releases, just for you!</p>
+        <img src="../images/Section line.png" class="section-line">
+        <div class="new-for-you-container">
+          <div class="new-for-you-card">
+            <img src="../images/festive.png" alt="Wedding Rings" class="new-for-you-image">
+            <a href="#" class="new-for-you-btn" data-release="Festive" onclick="filterByCollection('fetival')">Explore More</a>
+          </div>
+          <div class="new-for-you-card">
+            <img src="../images/festive2.png" alt="Jhumka" class="new-for-you-image">
+            <a href="#" class="new-for-you-btn" data-release="Wedding Rings" onclick="filterByCollection('Earring')">Explore More</a>
+          </div>
+          <div class="new-for-you-card">
+            <img src="../images/festive3.jpg" alt="Bracelets" class="new-for-you-image">
+            <a href="#" class="new-for-you-btn" data-release="Bracelets" onclick="filterByCollection('Jewellery')">Explore More</a>
+          </div>
+        </div>
+      </section>
+      
+
+
+
+      <div class="video-container">
+        <iframe id="custom-video"
+          src="https://www.youtube.com/embed/kYOP52BUZTI?start=0&end=53&autoplay=1&controls=0&mute=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&showinfo=0&fs=0&disablekb=1"
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+      </div>
+
+      <section class="modern-contact-section top-picks" id="contact">
+        <h2>Contact Us</h2>
+        <p>We are always available to guide you at your convenience.</p>
+        <img src="../images/Section line.png" class="section-line">
+        <div class="contact-options">
+          <div class="option">
+            <img src="../images/whatsapp.png" alt="WhatsApp Icon" class="icon" />
+            <h3>Connect on WhatsApp</h3>
+            <p>Reach out to us on the WhatsApp for quick assistance and support. Click the button below to start
+              chatting with us instantly!</p>
+            <a href="https://wa.me/7087993619" class="action-button" target="_blank">Connect Now</a>
+          </div>
+        </div>
+
+      </section>
+
+
+  </main>
+  <%- include('../partials/footer') %>
+
+  <style>
+.top-picks-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.top-picks-carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  flex: 1;
+}
+
+.top-picks-carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.top-picks-carousel .item {
+  min-width: 250px;
+  max-width: 250px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.top-picks-carousel .item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.top-picks-carousel .item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.top-picks-carousel .item p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 10px 0 5px 0;
+  line-height: 1.4;
+}
+
+.top-picks-carousel .item span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.top-picks-carousel .item span del {
+  color: #999;
+  margin-left: 5px;
+}
+
+.top-picks-carousel .item span strong {
+  color: #e74c3c;
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.scroll-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-btn:active {
+  transform: scale(0.95);
+}
+
+.scroll-left {
+  order: 1;
+}
+
+.scroll-right {
+  order: 3;
+}
+
+.top-picks-carousel {
+  order: 2;
+}
+
+@media (max-width: 768px) {
+  .top-picks-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .scroll-btn {
+    display: none;
+  }
+  
+  .top-picks-carousel .item {
+    min-width: 200px;
+    max-width: 200px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.getElementById('topPicksCarousel');
+  const scrollLeftBtn = document.getElementById('scrollLeft');
+  const scrollRightBtn = document.getElementById('scrollRight');
+  
+  if (carousel && scrollLeftBtn && scrollRightBtn) {
+    const scrollAmount = 270; // Width of item + gap
+    
+    scrollLeftBtn.addEventListener('click', () => {
+      carousel.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+      });
+    });
+    
+    scrollRightBtn.addEventListener('click', () => {
+      carousel.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Update button states based on scroll position
+    function updateButtonStates() {
+      const isAtStart = carousel.scrollLeft === 0;
+      const isAtEnd = carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth;
+      
+      scrollLeftBtn.style.opacity = isAtStart ? '0.5' : '1';
+      scrollRightBtn.style.opacity = isAtEnd ? '0.5' : '1';
+      scrollLeftBtn.style.cursor = isAtStart ? 'not-allowed' : 'pointer';
+      scrollRightBtn.style.cursor = isAtEnd ? 'not-allowed' : 'pointer';
+    }
+    
+    carousel.addEventListener('scroll', updateButtonStates);
+    updateButtonStates(); // Initial state
+  }
+});
+</script>

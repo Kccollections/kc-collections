@@ -1,0 +1,134 @@
+body {
+    font-family: 'Arial','Inria-serif', serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.order-info {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.order-info p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.tracking-container {
+    margin-top: 20px;
+}
+
+.progress-bar {
+    position: relative;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+.progress-bar-fill {
+    width: 50%;
+    /* Adjust this for current progress */
+    height: 100%;
+    background: #007185;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.tracking-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+}
+
+.tracking-steps div {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    position: relative;
+}
+
+.tracking-steps div span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background: #007185;
+    color: white;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.tracking-steps div.active span {
+    background: #28a745;
+}
+
+.tracking-status {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.tracking-status span {
+    font-size: 18px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.tracking-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+button {
+    margin: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #007185;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #005a63;
+}
+
+@media (max-width: 768px) {
+    .tracking-steps {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tracking-steps div {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .tracking-steps div span {
+        margin-right: 10px;
+    }
+}

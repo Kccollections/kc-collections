@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KC Collections - Register</title>
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+    <link rel="stylesheet" href="../stylesheets/login.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <!-- Register Form -->
+    <div class="form-box">
+      <h2>Register</h2>
+      <form action="/auth/register" method="POST" id="registerForm">
+        <!-- Full Name -->
+        <label for="name">Name *</label>
+        <input 
+          type="text" 
+          name="name" 
+          id="name" 
+          placeholder="Enter your full name" 
+          required 
+          aria-required="true">
+
+        <!-- Email Address -->
+        <label for="email">Email address *</label>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          placeholder="Enter your email address" 
+          required 
+          aria-required="true">
+
+        <!-- Mobile Number -->
+        <label for="mobile">Mobile *</label>
+        <input 
+          type="text" 
+          name="mobile" 
+          id="mobile" 
+          placeholder="Enter your mobile number" 
+          pattern="[0-9]{10}" 
+          title="Please enter a valid 10-digit mobile number." 
+          required 
+          aria-required="true">
+
+        <!-- Password -->
+        <label for="password">Password *</label>
+        <input 
+          type="password" 
+          name="password" 
+          id="password" 
+          placeholder="Enter your password" 
+          minlength="8" 
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+          title="Password must be at least 8 characters long, and include one uppercase letter, one lowercase letter, and one number." 
+          required 
+          aria-required="true">
+
+        <!-- Confirm Password -->
+        <label for="confirmPassword">Confirm Password *</label>
+        <input 
+          type="password" 
+          name="confirmPassword" 
+          id="confirmPassword" 
+          placeholder="Re-enter your password" 
+          required 
+          aria-required="true">
+
+        <!-- Submit Button -->
+        <button type="submit">Register</button>
+
+        <!-- Privacy Policy Notice -->
+        <p class="privacy-policy">
+          A link to set a new password will be sent to your email address. Your personal data will be used to support your
+          experience throughout this website, to manage access to your account, and for other purposes described in our <a
+            href="#">privacy policy</a>.
+        </p>
+      </form>
+    </div>
+
+    <%- include('../partials/footer') %>
+
+    <script>
+      // Validate that password and confirmPassword match before submission
+      document.getElementById('registerForm').addEventListener('submit', function (e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (password !== confirmPassword) {
+          e.preventDefault(); // Prevent form submission
+          alert('Passwords do not match. Please try again.');
+        }
+      });
+    </script>
+  </body>
+</html>

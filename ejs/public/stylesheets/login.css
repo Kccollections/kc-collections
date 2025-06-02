@@ -1,0 +1,132 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+
+.form-box {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.form-box h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #333;
+ 
+}
+
+.form-box form {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-box label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #666;
+  text-align: left;
+}
+
+.form-box input {
+  padding: 12px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.form-box input:focus {
+  border-color: #d4a552;
+  box-shadow: 0 0 5px rgba(212, 165, 82, 0.5);
+}
+
+.form-box button {
+  background-color: #d4a552;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.form-box button:hover {
+  background-color: #b89144;
+}
+
+.form-box a {
+  font-size: 14px;
+  color: #d4a552;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.form-box a:hover {
+  text-decoration: underline;
+}
+
+.privacy-policy {
+  font-size: 12px;
+  color: #666;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+.privacy-policy a {
+  color: #d4a552;
+  text-decoration: none;
+}
+
+.privacy-policy a:hover {
+  text-decoration: underline;
+}
+
+/* CSS for OTP div */
+#otpLogin {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+#otplogin .form-label{
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+#passwordLogin{ 
+  display: flex;
+  flex-direction: column;
+}
+
+#buttonContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#buttonContainer .form-button { width: 48%;}
+#otpContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#otpContainer .form-input{
+  width: 70%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#otpContainer .form-button{
+  width: 22%;
+  margin-top: 0;
+  margin-bottom: 0;
+}

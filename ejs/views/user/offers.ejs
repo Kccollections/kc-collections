@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Details</title>
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../stylesheets/offer.css">
+    
+</head>
+<body>
+    <header>
+        <%- include('../partials/navbar') %>
+      </header>
+   
+      <div class="offer-container">
+        <h1>Special Offers</h1>
+      
+        <% if (offers && offers.length > 0) { %>
+          <% offers.forEach(offer => { %>
+            <div class="offer-card">
+              <h2><%= offer.title %></h2>
+              <p class="offer-description"><%= offer.description %></p>
+              <ul class="offer-details">
+                <li><strong>Discount:</strong> <%= offer.discountPercentage %>%</li>
+                <li><strong>Valid From:</strong> <%= new Date(offer.validFrom).toLocaleDateString() %></li>
+                <li><strong>Valid Until:</strong> <%= new Date(offer.validUntil).toLocaleDateString() %></li>
+                <li><strong>Terms:</strong> <%= offer.termsAndConditions || 'No terms specified' %></li>
+              </ul>
+              <% if (offer.applicableProducts.length > 0) { %>
+                <p><strong>Applicable Products:</strong></p>
+                <ul>
+                  <% offer.applicableProducts.forEach(product => { %>
+                    <li><%= product.name %></li>
+                  <% }) %>
+                </ul>
+              <% } %>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>No offers available at the moment.</p>
+        <% } %>
+      </div>
+      
+    <%- include('../partials/footer') %>

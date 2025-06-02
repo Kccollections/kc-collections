@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Categories</title>
+    <link rel="stylesheet" href="../stylesheets/Quick Links.css">
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+  
+  <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+  
+    <%- include('../partials/navbar') %>
+  
+
+      <div class="container">
+        <div class="help-categories">
+            <div class="categories">
+                <h2><strong>Help Categories</strong></h2>
+                <ul>
+                  <li id="order-delivery"><a href="/help/orderDeliverInformation" style="text-decoration: none; color: inherit;">Order Delivery Information</a></li>
+                  <li id="my-account"><a href="/help/myAccount" style="text-decoration: none; color: inherit;">My Account</a></li>
+                  <li id="payment"><a href="/help/payments" style="text-decoration: none; color: inherit;">Payment Options</a></li>
+                  <li id="returns" class="active-category"><a href="/help/returns" style="text-decoration: none; color: inherit;">Returns and Exchanges</a></li>
+              </ul>
+                
+            </div>
+            <div class="faq-content">
+                <div id="returns-content" class="faq-section" >
+                    <h2>Returns and Exchanges</h2>
+                    <!-- Add FAQs related to Returns -->
+                    <div class="faq-item">
+                        <button>What is your return policy?</button>
+                        <div class="answer">
+                            Our return policy allows you to return most items within 30 days of delivery. Items must be unused, in original condition, and with all packaging intact.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I initiate a return?</button>
+                        <div class="answer">
+                            To initiate a return, go to the "My Orders" section in your account, select the item you wish to return, and follow the instructions to request a return.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I return items after 30 days?</button>
+                        <div class="answer">
+                            Returns after 30 days are generally not accepted. However, you may contact customer support for assistance with specific cases.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Are there any items that cannot be returned?</button>
+                        <div class="answer">
+                            Some items, such as perishable goods, personalized products, or items marked as non-returnable, cannot be returned. Please check the product description for details.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Do I have to pay for return shipping?</button>
+                        <div class="answer">
+                            Return shipping costs are typically covered by the customer unless the item is damaged, defective, or incorrect. In such cases, we will provide a prepaid return label.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I prepare an item for return?</button>
+                        <div class="answer">
+                            Please ensure the item is unused and in its original packaging. Include all accessories, tags, and documentation. Follow the return instructions provided in your account or by customer support.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How long does it take to process a return?</button>
+                        <div class="answer">
+                            Once we receive the returned item, it may take 7-10 business days to process the return and issue a refund or exchange.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I exchange an item instead of returning it?</button>
+                        <div class="answer">
+                            Yes, exchanges are possible for most items. You can request an exchange when initiating the return process by selecting the desired replacement item.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How will I be refunded for my return?</button>
+                        <div class="answer">
+                            Refunds are typically issued to the original payment method. Depending on your bank or payment provider, it may take 5-10 business days for the refund to appear in your account.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I return an item I received as a gift?</button>
+                        <div class="answer">
+                            Yes, you can return a gift. Please provide the gift receipt or order number, and the refund can be processed to the original payment method or as store credit.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>What should I do if my return is rejected?</button>
+                        <div class="answer">
+                            If your return is rejected, you will receive an explanation along with any relevant details. If you believe this was an error, please contact our customer support team for further assistance.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I return a digital product?</button>
+                        <div class="answer">
+                            Digital products are generally non-returnable. However, if there is an issue with the download or access, please contact customer support for assistance.
+                        </div>
+                    </div>
+                    
+                </div> 
+            </div>
+        </div>
+    </div>
+
+
+      <script>
+        // Toggle FAQ answers and close others
+        const faqButtons = document.querySelectorAll('.faq-item button');
+        const categories = document.querySelectorAll('.categories ul li');
+
+        faqButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Close all answers
+                faqButtons.forEach(btn => {
+                    if (btn !== button) {
+                        btn.classList.remove('active');
+                        btn.nextElementSibling.style.display = 'none';
+                    }
+                });
+
+                // Toggle current answer
+                button.classList.toggle('active');
+                const answer = button.nextElementSibling;
+                answer.style.display = button.classList.contains('active') ? 'block' : 'none';
+            });
+        });
+
+        // Highlight selected category
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                // Remove active class from all categories
+                categories.forEach(cat => cat.classList.remove('active-category'));
+                
+                // Add active class to clicked category
+                category.classList.add('active-category');
+
+                // Update FAQ title
+                document.querySelector('.faq-content h2').textContent = category.textContent;
+            });
+        });
+    </script>
+    
+    <%- include('../partials/footer') %>
+
+
+ 

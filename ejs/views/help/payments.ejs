@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Categories</title>
+    <link rel="stylesheet" href="../stylesheets/Quick Links.css">
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+ 
+  <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+  
+    <%- include('../partials/navbar') %>
+  
+
+    
+      <div class="container">
+        <div class="help-categories">
+            <div class="categories">
+                <h2><strong>Help Categories</strong></h2>
+                <ul>
+                  <li id="order-delivery"><a href="/help/orderDeliverInformation" style="text-decoration: none; color: inherit;">Order Delivery Information</a></li>
+                  <li id="my-account"><a href="/help/myAccount" style="text-decoration: none; color: inherit;">My Account</a></li>
+                  <li id="payment" class="active-category"><a href="/help/payments" style="text-decoration: none; color: inherit;">Payment Options</a></li>
+                  <li id="returns"><a href="/help/returns" style="text-decoration: none; color: inherit;">Returns and Exchanges</a></li>
+              </ul>
+            </div>
+            <div class="faq-content">
+                <div id="payment-content" class="faq-section" >
+                    <h2>Payment Options</h2>
+                    <!-- Add FAQs related to Payment -->
+                    <div class="faq-item">
+                        <button>What payment methods do you accept?</button>
+                        <div class="answer">
+                            We accept various payment methods, including credit/debit cards, PayPal, and other online payment options. The available methods will be shown at checkout.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I use multiple payment methods for a single order?</button>
+                        <div class="answer">
+                            Currently, we only allow one payment method per order. Please select the method that suits you best at checkout.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Is it safe to make payments on your site?</button>
+                        <div class="answer">
+                            Yes, we use secure payment gateways with encryption to ensure your payment details are protected.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I know if my payment was successful?</button>
+                        <div class="answer">
+                            After completing your payment, you will receive a confirmation email and SMS with your payment details.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>What should I do if my payment is declined?</button>
+                        <div class="answer">
+                            If your payment is declined, please check the details entered and try again. If the issue persists, contact your bank or payment provider for further assistance.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I modify my payment details after placing the order?</button>
+                        <div class="answer">
+                            Once an order is placed, payment details cannot be modified. If you encounter any issues, please contact our support team for assistance.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How can I request a refund?</button>
+                        <div class="answer">
+                            To request a refund, please contact our customer support team with your order number and payment details. Refunds are processed as per our refund policy.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How long does it take for my refund to be processed?</button>
+                        <div class="answer">
+                            Refunds are typically processed within 7-10 business days, depending on the payment method used.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I apply a discount code to my order?</button>
+                        <div class="answer">
+                            Yes, you can apply a discount code during checkout. Simply enter the code in the designated field before completing your payment.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>What should I do if my payment was charged but the order is not confirmed?</button>
+                        <div class="answer">
+                            If you were charged but your order is not confirmed, please check your payment details and transaction history. If the issue persists, contact our support team for assistance.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I save my payment information for future orders?</button>
+                        <div class="answer">
+                            Yes, you can save your payment information for future orders by selecting the option during checkout. Your payment details will be securely stored for your convenience.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Do you charge sales tax or VAT?</button>
+                        <div class="answer">
+                            Sales tax or VAT may be applicable depending on your location and is added during checkout. You will be able to view the total charges before completing your payment.
+                        </div>
+                    </div>
+                    
+                </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+
+
+
+      <script>
+        // Toggle FAQ answers and close others
+        const faqButtons = document.querySelectorAll('.faq-item button');
+        const categories = document.querySelectorAll('.categories ul li');
+
+        faqButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Close all answers
+                faqButtons.forEach(btn => {
+                    if (btn !== button) {
+                        btn.classList.remove('active');
+                        btn.nextElementSibling.style.display = 'none';
+                    }
+                });
+
+                // Toggle current answer
+                button.classList.toggle('active');
+                const answer = button.nextElementSibling;
+                answer.style.display = button.classList.contains('active') ? 'block' : 'none';
+            });
+        });
+
+        // Highlight selected category
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                // Remove active class from all categories
+                categories.forEach(cat => cat.classList.remove('active-category'));
+                
+                // Add active class to clicked category
+                category.classList.add('active-category');
+
+                // Update FAQ title
+                document.querySelector('.faq-content h2').textContent = category.textContent;
+            });
+        });
+    </script>
+
+
+ 
+<%- include('../partials/footer') %>

@@ -1,0 +1,69 @@
+/* Address Section Styling */
+.addresses {
+    flex-grow: 1;
+    padding: 25px; /* Reduced padding */
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 15px; /* Space between items */
+    height: fit-content;
+    max-height: fit-content;
+}
+
+.addresses h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0; /* No margin around heading */
+    padding-bottom: 5px; /* Reduced space below heading */
+    width: 100%; /* Make the heading span the full width */
+}
+
+.ul{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+.address-details {
+    list-style-type: none;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    max-height: fit-content;
+    
+}
+
+.address-details strong {
+    color: #555;
+}
+
+.address-item h4 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.address-item p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.address-item .edit-link,
+.address-item .add-link {
+    font-size: 14px;
+    color: #f39c12;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.address-item .edit-link:hover,
+.address-item .add-link:hover {
+    color: #e67e22;
+}

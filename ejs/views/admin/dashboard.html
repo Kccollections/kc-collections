@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Google Charts Testing</title>
+  <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+  <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto" rel="stylesheet">
+  <style>
+     h1{
+     font-family: 'Lobster', cursive;
+     text-align:center;
+    }
+    h2,p{
+      font-family:'Roboto', sans-serif;
+      text-align:center;
+    }
+    .container{
+      width:90%;
+      margin:20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  <h1>Google Charts Playground</h1>
+  <h2>Bar chart</h2>
+  <div id="chart2div" style="margin-top:0px; height:600px;display:none;">
+  </div>
+  <!-------------------------------------------------------------------------------------------------------------------->  
+  <script type='text/javascript'>
+  google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.setOnLoadCallback(drawBasic);
+
+	function drawBasic() {
+      var data = google.visualization.arrayToDataTable([
+        ['Mean per member', '', {role:'style'}, {role:'annotation'}],
+        ['VERY LARGE SCHEMES (5000+ MEMBERS)', 182, 'opacity: 0.8', '£182'],
+        ['LARGE SCHEMES (1000-4999 MEMBERS)', 281, 'opacity: 0.8', '£282'],
+        ['MEDIUM SCHEMES (100-999 MEMBERS)', 505, 'opacity: 0.8', '£505'],
+        ['SMALL SCHEMES (12-99 MEMBERS)', 1054, 'opacity: 0.8', '£1054']
+      ]);
+
+      var options = {
+        legend: {position:'none'},
+        title: 'Figure 4: Mean per member annual running cost by scheme size',
+        chartArea: {width: '50%', left: '30%', height:'auto'},
+        hAxis: {
+          title: 'Mean per member',
+          minValue: 0,
+          format: '£###,###,###',
+          ticks: [0, 200, 400, 600, 800, 1000, 1200]
+        }
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart2div'));
+      chart.draw(data, options);
+    }
+    </script>
+  
+  <div id="chart3div" style="margin-top:50px; height:600px; width:100%;"></div>
+  <script type='text/javascript'>
+  	google.charts.load('current', {packages:['corechart']});
+  	google.charts.setOnLoadCallback(drawChart);
+    function drawChart(){
+    		var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Country');
+        data.addColumn('number', 'Percentage Point');
+        data.addRows ([
+        ['Luxembourg', 2],
+				['Sweden', 9],
+				['France', 10],  
+				['Turkey', 10],
+				['Latvia', 12],
+        ['Finland', 13],
+        ['Switzerland', 13],
+        ['Italy', 14],
+        ['Austria', 15],
+        ['Spain', 16],
+      ]);
+       var options = {
+        legend: {position:'none'},
+        title: 'Gap in the employment rate between those who report a disability and those who do not, aged 15-64',
+        chartArea: {width: '90%'},
+       	vAxis: {
+          ticks: [0, 5, 10, 15, 20,25,30,35,40],
+          title:'Percentage points',
+          format: '#\'%\''
+        },
+       hAxis:{
+         textStyle:{
+           fontSize:12
+        }
+       },
+       colors:['#0053A1'],
+     }
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart3div'));
+    chart.draw(data, options); 
+    }//end drawChart
+  </script>
+  <!--------------------------------------------------------------->
+  <h2 style="margin-top: 50px;">Stacked bar chart</h2>
+  <div id="stacked_chart_div"></div>
+  <script type='text/javascript'>
+	
+    google.charts.load('current', {packages:['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawChart);
+    // var formatter = new google.visualization.NumberFormat({pattern: '#%'});
+    // formatter.format(data, 1);
+    function drawChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Employment', 'In Employment', 'Unemployed', 'Economically inactive', { role: 'annotation' }],
+        ['Not disabled', 80, 4, 16,''],
+        ['Disabled', 47, 6, 47,'']
+      ]);
+
+      var options = {
+        width:1000,
+        height: 500,
+        legend: { position: 'top', maxLines: 3 },
+        bar: {groupWidth: '75%'},
+        colors: ['#ee7e3b', '#636363', '#3fbfad'],
+        isStacked: true,
+        //isStacked: 'percent',
+        tooltip:{
+          showColorCode:true
+        },
+        hAxis:{
+        	format: '#\'%\''
+      	}
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById('stacked_chart_div'));
+      chart.draw(data, options);
+  }
+  
+</script>
+ <!----------------------------------------------------------------->
+  <h2>Column chart with negative values</h2>
+  <div id="negvaluechart" style="width:100%; height:800px;"></div>
+  <script type="text/javascript">
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart(){
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'year');
+    data.addColumn('number', 'millions');
+    data.addRows([
+      ['1999', 40],
+      ['2000', -40],
+      ['2001', 18],
+      ['2002', 70],
+      ['2003', 62],
+      ['2004', 70],
+    
+    ]);
+    
+     var options = {     
+        legend: {position:'none'},
+        title: 'BHS Ltd: Net Profit/Loss, £million',
+       	vAxis: {
+          ticks: [-100, -80, -60, -40,-20,0,20,40,60,80,100],
+        },
+       hAxis:{
+         textStyle:{
+           fontSize:15
+         }
+       },
+       colors:['#5B9BD5']
+       
+     }
+    var chart = new google.visualization.ColumnChart(document.getElementById('negvaluechart'));
+    chart.draw(data, options);
+  }
+</script>
+
+  <!--------------------------------------------------------------->
+  <h2>Pie chart</h2>
+  <div id="piechart1" style="width:100%; height:800px;"></div>
+  <script type="text/javascript">
+   google.charts.load('current', {'packages':['corechart']});
+ 	 google.charts.setOnLoadCallback(drawChart);
+    
+   function drawChart(){
+   	var data = google.visualization.arrayToDataTable([
+    ['Type of Arangement', ''],    
+    ['Family-based arrangement', 18],
+    ['CMS: Direct Pay', 11],
+    ['CMS: Collect and Pay', 7],
+    ['In process of setting up an arrangement', 8],
+    ['No arrangement', 56]
+    ]);
+    
+    var options={
+      title: 'Figure 1: Child maintenance arrangements three months after CSA case closure (%)',
+      chartArea:{
+        width:'60%',//of the container
+        height:'60%'//of the container
+      },
+      colors:[//corresponding to the order of the columns
+        '#00B050','#2E75B6','#9DC3E6','#FF6969','#FF0000'
+      ],
+      //is3D:true,
+      legend:{
+      position:'left',
+    	},
+      pieSliceText:'percentage',
+      //reverseCategories:true,//reverses the order the slices are drawn i.e. puts the big red portion to the left
+      slices:{
+        0:{offset:.1 }
+      },
+      tooltip:{
+        text: 'percentage',
+        trigger: 'focus'
+      }
+    };  
+      
+    var chart = new google.visualization.PieChart(document.getElementById('piechart1'));  
+    chart.draw(data, options);
+    }
+  </script>
+    
+  <!----------------------------------------------------------------->  
+  <h2>Donut Chart</h2>
+  <div id="donutchart" style="width:100%;height:800px;"></div>
+  <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Petition', 'Signature Count'],
+          ['EU Referendum Rules triggering a 2nd EU Referendum',     5283],
+          ['Prevent Donald Trump from making a State Visit to the United Kingdom',      2143],
+          ['Give the Meningitis B vaccine to ALL children, not just newborn babies',  1625],
+          ['Stop all immigration and close the UK borders until ISIS is defeated', 1010],
+          ['Allow Walid Durani to stay in the UK',    783],
+          ['Make the uk armed forces pensions for 22 years service tax free',    659],
+          ['Donald Trump should make a State Visit to the United Kingdom',    578],
+          ['Consider a vote of No Confidence in Jeremy Hunt, Health Secretary',    494],
+          ['Make paying rent enough proof that you are able meet mortgage repayments',    475]
+        ]);
+
+        var options = {
+          title: 'Top Ten Petitions Signed by Constituency: Aldershot',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+  </script>
+ <!-------------------------------------------------------------------------------------->
+ <h2>Stacked column chart</h2>
+ <div id="stacked_bar_div" style="width:100%;height:800px"></div>
+ <script type="text/javascript">
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart(){
+    var data = google.visualization.arrayToDataTable([
+        ['Constituency', 'Unique Signature count', 'Constituency count', { role: 'annotation' } ],
+        ['Aldershot', 24470, 105549, '23.18%'],
+        ['Aldridge-Brownhills', 13745, 77736, '17.68%'],
+        ['Altrincham and Sale West', 26630, 99607, '26.74%'],
+        ['Amber Valley', 16142, 88941, '18.15%'],
+        ['Arundel and South Downs', 26772,98271, '27.24%'],
+        ['Ashfield', 17208, 103934, '16.56%'],
+        ['Ashford', 26945, 118063, '22.82%'],
+        ['Ashton-under-Lyne', 17649, 91096, '19.37%'],
+        ['Aylesbury', 26220, 114834, '22.83%'],
+        ['Banbury', 31294, 119726, '26.14%']
+      ]);
+     var options = {
+        title: "Percentage of Constituents Signed by Constituency",
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '85%' },
+        isStacked: true
+      };
+     var chart = new google.visualization.ColumnChart(document.getElementById('stacked_bar_div'));
+        chart.draw(data, options);
+  }
+</script>
+</div>
+</body>
+</html>

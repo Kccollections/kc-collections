@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="../stylesheets/orderdetail.css">
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <%- include('../partials/navbar') %>
+
+    <div class="container">
+        <h1 class="heading">Order Details</h1>
+        <div class="header">
+            <div class="header-left">
+                <p>Ordered on 7 March 2024</p>
+                <p>Order# 406-3023496-5846708</p>
+            </div>
+            <div class="header-right">Invoice</div>
+        </div>
+
+        <div class="details-box">
+            <div class="section">
+                <div class="section-title">Shipping Address</div>
+                <div class="details">
+                    <p>Lorem, ipsum.</p>
+                    <p>Lorem ipsum dolor sit.</p>
+                    <p>Lorem, ipsum.</p>
+                    <p>Lorem, ipsum dolor.</p>
+                    <p>India</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Payment Method</div>
+                <div class="details">
+                    <p>Pay on Delivery</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Order Summary</div>
+                <div class="details">
+                    <p>Item(s) Subtotal: ₹599.00</p>
+                    <p>Shipping: ₹40.00</p>
+                    <p>Cash/Pay on Delivery fee: ₹0.00</p>
+                    <p>Total: ₹639.00</p>
+                    <p>Promotion Applied: -₹40.00</p>
+                    <p><strong>Grand Total: ₹599.00</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-items">
+            <img src="../images/Gold bangles.png" alt="product">
+            <div class="item-details">
+                <p><strong>Lorem ipsum dolor sit.</strong></p>
+                <p>Lorem, ipsum dolor.</p>
+                <p>Sold by: Appario Retail Private Ltd</p>
+                <p><strong>Price: ₹599.00</strong></p>
+                <a href="#" class="shop-now-button">Shop Now</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+    <%- include('../partials/footer') %>
+
+
+
+</body>
+</html>

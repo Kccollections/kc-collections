@@ -1,0 +1,21 @@
+<%- include('../partials/header', { title: 'Payment Successful' }) %>
+
+<div class="container">
+  <h2>Payment Successful</h2>
+  <% if (order) { %>
+    <p>Thank you for your payment! Here is your order summary:</p>
+    <div class="order-details">
+      <h3>Order ID: <%= order.id %></h3>
+      <ul>
+        <%= order.items%>
+      </ul>
+      <h4>Total Amount Paid: $<%= order.totalAmount || '0.00' %></h4>
+      <h4>Order Status: <%= order.status || 'Unknown' %></h4>
+    </div>
+  <% } else { %>
+    <p>Order details could not be retrieved. Please contact support.</p>
+  <% } %>
+  <a href="/" class="btn btn-primary">Return to Home</a>
+</div>
+
+<%- include('../partials/footer') %>

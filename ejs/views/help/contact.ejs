@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="../stylesheets/header_styles.css">
+  <link rel="stylesheet" href="../stylesheets/contact_styles.css">
+  <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    .alert {
+  padding: 15px;
+  background-color: #4CAF50;
+  position: absolute;
+  top: 3%;
+  left: 30%;
+  right: 30%;
+  color: white;
+  text-align: center;
+  margin: 20px 0;
+  border-radius: 5px;
+  font-weight: bold;
+  z-index: 1000;
+}
+
+  </style>
+</head>
+<body>
+  
+    <%- include('../partials/navbar') %>
+  
+  
+ 
+  
+
+      <main>
+
+
+        <% if (message) { %>
+          <div class="alert">
+            <p><%= message %></p>
+          </div>
+        <% } %>
+
+
+        <!-- Contact Info Section -->
+        <section class="contact-info">
+          <div class="address">
+            <h2>Our Location</h2>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Jewelry Street, Gold City, India</p>
+            <p><i class="fas fa-phone"></i> +91-9876543210</p>
+            <p><i class="fas fa-envelope"></i> support@jewelry.com</p>
+            <p><i class="fas fa-clock"></i> Monday - Friday: 9 AM - 6 PM</p>
+            <p><i class="fas fa-globe"></i> www.jewelry.com</p>
+          </div>
+          <div class="social-links">
+            <h2>Connect with Us</h2>
+            <p>Follow us for the latest updates:</p>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </section>
+      
+        <!-- Contact Form Section -->
+        <section class="contact-form">
+    <h2>Contact Us</h2>
+    <p>If you have any questions, feel free to reach out to us. We’re here to help!</p>
+    <form action="/contact" method="POST">
+      <div class="form-group">
+        <label for="name">Full Name*</label>
+        <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address*</label>
+        <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Your Message*</label>
+        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+        
+      </main>
+      
+      
+<script>
+  // Hide the alert after 5 seconds if message exists
+  document.addEventListener('DOMContentLoaded', () => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      setTimeout(() => {
+        alert.style.display = 'none';
+      }, 3000);
+    }
+  });
+</script>
+      
+
+      <%- include('../partials/footer') %>

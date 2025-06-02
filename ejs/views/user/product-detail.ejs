@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9ct Yellow Solid Gold Starburst Link Bracelet</title>
+    <link rel="stylesheet" href="../stylesheets/product.css">
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+    <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .zoomed-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.zoomed-image {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+.close-zoom {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+    </style>
+   
+</head>
+
+<body>
+
+
+
+  <%- include('../partials/navbar.ejs') %>
+
+
+<div class="container">
+    <div class="flex-container">
+        <!-- Image Section -->
+        <div class="image-section">
+            <div class="image-container">
+                <img src="../<%= product.images[0] %>" alt="<%= product.name %>" class="main-image">
+                <div class="zoom-icon">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+            </div>
+            <div class="thumbnail-dots">
+                <% if (product.thumbnailImages && Array.isArray(product.thumbnailImages)) { %>
+                    <% product.thumbnailImages.forEach(image => { %>
+                      <span class="dot" data-image="<%= image %>"></span>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No thumbnails available</p>
+                  <% } %>                  
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+    const mainImage = document.querySelector(".main-image");
+    const dots = document.querySelectorAll(".dot");
+    const zoomIcon = document.querySelector(".zoom-icon");
+    let currentIndex = 0;
+    let interval;
+
+    function changeImage(index) {
+        const newImage = dots[index].getAttribute("data-image");
+        mainImage.src = `../${newImage}`;
+
+        // Remove active class from all dots and set it to the selected one
+        dots.forEach(d => d.classList.remove("active"));
+        dots[index].classList.add("active");
+    }
+
+    // Start auto sliding
+    function startAutoSlide() {
+        interval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % dots.length;
+            changeImage(currentIndex);
+        }, 2000); // Change image every 2 seconds
+    }
+
+    // Stop auto sliding when user interacts
+    function stopAutoSlide() {
+        clearInterval(interval);
+        setTimeout(startAutoSlide, 5000); // Restart after 5 seconds of inactivity
+    }
+
+    // Initialize auto-slide if there are multiple images
+    if (dots.length > 1) {
+        startAutoSlide();
+    }
+
+    // Handle manual selection from thumbnails
+    dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+            currentIndex = index;
+            changeImage(currentIndex);
+            stopAutoSlide();
+        });
+    });
+
+    // Zoom functionality
+    zoomIcon.addEventListener("click", () => {
+        const zoomedImage = document.createElement("div");
+        zoomedImage.className = "zoomed-image-container";
+        zoomedImage.innerHTML = `<div class="zoomed-overlay"></div>
+            <img src="${mainImage.src}" class="zoomed-image">
+            <span class="close-zoom">&times;</span>`;
+
+        document.body.appendChild(zoomedImage);
+
+        // Close zoom on click
+        document.querySelector(".close-zoom").addEventListener("click", () => {
+            zoomedImage.remove();
+        });
+
+        document.querySelector(".zoomed-overlay").addEventListener("click", () => {
+            zoomedImage.remove();
+        });
+    });
+});
+
+        </script>
+  
+        <!-- Content Section -->
+        <div class="content-section">
+            <h1><%= product.name %></h1>
+            <div class="rating">
+                <% 
+                const rating = product.rating || 0; // Assuming rating is between 0 and 5
+                const maxStars = 5; 
+            %>
+            <span class="rating-stars">
+                <% for (let i = 1; i <= maxStars; i++) { %>
+                    <% if (i <= rating) { %>
+                        ⭐
+                    <% } else { %>
+                        ☆
+                    <% } %>
+                <% } %>
+                <br>
+                <span class="rating-count">(<%= product.reviews || 0 %> Reviews)</span>
+            </span></div>
+  
+            <div class="sku-category">
+                <span><strong>SKU:</strong> <%= product.sku %></span>
+                <span><strong>Category:</strong> <%= product.category %></span>
+            </div>
+  
+            <div class="horizontal-line"></div>
+  
+            <div class="price">$<%= product.price %></div>
+  
+            <div class="product-actions">
+                <div class="buttons">
+                    <button class="add-to-cart" id="addToCartBtn">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    <button class="buy-now" id="buyNowBtn">
+                        <i class="far fa-credit-card"></i> Buy Now
+                    </button>
+                </div>
+            
+                <div class="additional-options">
+                    <div class="additional-options-div" id="wishlistOption">
+                        <!-- <i class="far fa-heart" id="wishlistIcon" onclick="toggleHeartcolor(this)"></i> -->
+                        <a href="#" id="addToWishlistLink" onclick="addToWishlist(event)"><i class="far fa-heart" id="wishlistIcon" onclick="toggleHeartcolor(this)"></i>Add to Wishlist</a>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                // Function to add item to cart
+                document.getElementById('addToCartBtn').addEventListener('click', function () {
+                    const productId = "<%= product._id %>"; // Ensure this is replaced with actual product ID
+                    const quantity = document.getElementById('quantity') ? document.getElementById('quantity').value : 1;
+                    
+                    console.log(`Product ${productId} with quantity ${quantity} added to cart.`);
+            
+                    fetch('/cart/add', {
+                        method: 'POST',
+                        body: JSON.stringify({ productId, quantity }),
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Added to cart!');
+                        } else {
+                            alert('Error adding to cart');
+                        }
+                    })
+                    .catch(err => {
+                        alert('Failed to add to cart');
+                    });
+                });
+            
+                // Function to handle "Buy Now" logic
+                document.getElementById('buyNowBtn').addEventListener('click', function () {
+                    const productId = "<%= product._id %>"; // Ensure this is replaced with actual product ID
+                    const quantity = document.getElementById('quantity') ? document.getElementById('quantity').value : 1;
+                    
+                    console.log(`Proceed to checkout with product ${productId} and quantity ${quantity}`);
+                    window.location.href = `/checkout?productId=${productId}&quantity=${quantity}`;
+                });
+            
+                // Function to add item to wishlist (click event)
+                function addToWishlist(event) {
+                    event.preventDefault(); // Prevent the default anchor tag behavior (page reload)
+                    const productId = "<%= product._id %>"; // Ensure this is replaced with actual product ID
+                    
+                    console.log(`Product ${productId} added to wishlist.`);
+            
+                    // Send the request to add the product to the wishlist
+                    fetch('/wishlist/add', {
+                        method: 'POST',
+                        body: JSON.stringify({ productId }),
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Added to wishlist!');
+                            // Change the heart icon to solid (filled)
+                            document.getElementById('wishlistIcon').classList.add('fas');
+                            document.getElementById('wishlistIcon').classList.remove('far');
+                        } else {
+                            alert('Error adding to wishlist');
+                        }
+                    })
+                    .catch(err => {
+                        alert('Failed to add to wishlist');
+                    });
+                }
+            
+                // Toggle heart color when clicked
+                function toggleHeartcolor(icon) {
+                    icon.classList.toggle('fas'); // Toggle filled heart (Font Awesome solid class)
+                    icon.classList.toggle('far'); // Toggle outline heart (Font Awesome regular class)
+                }
+            </script>
+            
+        </div>
+  
+        <!-- Product Info Section -->
+        <div class="content-section">
+            <div class="product-info">
+                <button class="dropdown-button" onclick="toggleDropdown('product-info-dropdown')">
+                    Product Information <span class="arrow">▼</span>
+                </button>
+                <div id="product-info-dropdown" class="dropdown-content">
+                    <table>
+                        <% Object.keys(product.specifications).forEach(spec => { %>
+                            <tr>
+                                <th><%= spec %></th>
+                                <td><%= product.specifications[spec] %></td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                </div>
+  
+                <button class="dropdown-button" onclick="toggleDropdown('description-dropdown')">
+                    Description <span class="arrow">▼</span>
+                </button>
+                <div id="description-dropdown" class="dropdown-content">
+                    <p><%= product.description %></p>
+                </div>
+            </div>
+            <script>
+                function toggleDropdown(id) {
+    const dropdown = document.getElementById(id);
+    const button = dropdown.previousElementSibling; // Get the button
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+        button.querySelector(".arrow").textContent = "▼";
+    } else {
+        // Hide other dropdowns
+        document.querySelectorAll(".dropdown-content").forEach(content => {
+            content.style.display = "none";
+            content.previousElementSibling.querySelector(".arrow").textContent = "▼";
+        });
+
+        dropdown.style.display = "block";
+        button.querySelector(".arrow").textContent = "▲";
+    }
+}
+
+            </script>
+        </div>
+    </div>
+  
+    <div class="horizontal-line"></div>
+  
+    <!-- Related Products Section -->
+    <div class="related-products-section">
+        <h2>Related Products</h2>
+        <div class="related-products">
+            <% relatedProducts.forEach(related => { %>
+                <div class="product">
+                    <img src="../<%= related.images[0] %>" alt="<%= related.name %>">
+                    <p class="product-name"><%= related.name %></p>
+                    <p class="product-price">$<%= related.price %></p>
+                    <button onclick="window.location.href='/product/<%= related._id %>'">View Product →</button>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+  
+    <div class="horizontal-line"></div>
+  
+    <!-- Customer Reviews Section -->
+    <!-- <div class="customer-reviews-section">
+        <h2>Customer Reviews</h2>
+        <div class="review-content">
+            <% product.reviews.forEach(review => { %>
+                <div class="customer-review">
+                    <div class="review-header">
+                        <p><strong><%= review.name %></strong> – <%= review.date %></p>
+                        <p>⭐<%= '⭐'.repeat(review.rating) %></p>
+                    </div>
+                    <p><%= review.comment %></p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+  </div> -->
+  
+
+<%- include('../partials/footer') %>

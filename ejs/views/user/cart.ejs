@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KC Collections</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../stylesheets/styles.css">
+  <link rel="stylesheet" href="../stylesheets/header_styles.css">
+  <link rel="stylesheet" href="../stylesheets/cart_styles.css">
+  <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+  <link rel="stylesheet" href="../stylesheets/filled-cart.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .removeModal{
+      background-color: rgba(0, 0, 0, 0.7); /* Darker semi-transparent background */
+      width: 100%;
+      height: 100%;
+    }
+/* Modal container styling */
+#removeModal {
+  position: fixed;
+  top: 50%; /* Set top at 50% of viewport */
+ 
+  left: 50%; /* Set left at 50% of viewport */
+ 
+  transform: translate(-20%, -20%); /* Adjust for centering */
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it stays on top */
+  
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show modal */
+#removeModal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Modal content box */
+.modal-content {
+  background-color: #fff;
+  width: 90%;
+  max-width: 450px; /* Slightly larger for better readability */
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  text-align: center; /* Center text content */
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Slide-in animation for modal */
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close button */
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-content .close:hover {
+  color: #ff4d4d; /* Highlight on hover */
+}
+
+/* Modal header */
+.modal-content h2 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Modal description text */
+.modal-content p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* Buttons styling */
+.modal-content .confirm-btn,
+.modal-content .close-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-content .confirm-btn {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+.modal-content .confirm-btn:hover {
+  background-color: #d93636;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 77, 77, 0.4);
+}
+
+.modal-content .close-btn {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.modal-content .close-btn:hover {
+  background-color: #e1e1e1;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Add responsiveness */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .modal-content p {
+    font-size: 0.95rem;
+  }
+
+  .modal-content .confirm-btn,
+  .modal-content .close-btn {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+
+  </style>
+
+</head>
+<body>
+<%- include('../partials/navbar') %>
+  
+<% 
+const totalAmount = cart.items.reduce((sum, item) => sum + (item.productId.price * item.quantity), 0);
+const totalProducts = cart.items.reduce((sum, item) => sum + item.quantity, 0); 
+const productIds = cart.items.map(item => item.productId._id); // Collect product IDs into an array
+const productQuantities = cart.items.reduce((quantities, item) => {
+quantities[item.productId._id] = item.quantity;
+return quantities;
+}, {});
+%>
+
+
+    <% if (cart.items && cart.items.length > 0) { %>
+
+    <div class="cart-container">
+      <!-- Cart Heading -->
+      <h1 class="cart-heading">Cart</h1>
+    
+      <div class="cart-content">
+        <!-- Product List -->
+        <div class="product-list">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% cart.items.forEach(item=> { %>
+              <tr>
+                <td>
+                  <img src="../<%= item.productId.images[0] %>" alt="<%=item.productId.name%>">
+                  <%= item.productId.name %>
+                </td>
+                
+                <td class="item-price">$<%= item.productId.price %></td>
+                <td class="quantity-cell">
+                  <i class="fas fa-minus decrement" onclick="updateQuantity(event, -1, '<%= item.productId._id %>')"></i>
+                  <input type="number" value="<%= item.quantity %>" min="1" data-price="<%= item.productId.price %>" data-id="<%= item.productId._id %>" readonly>
+                  <i class="fas fa-plus increment" onclick="updateQuantity(event, 1, '<%= item.productId._id %>')"></i>
+                </td>
+                <td class="item-subtotal" id="subtotal-<%= item.productId._id %>">
+                  $<%= (item.productId.price * item.quantity).toFixed(2) %>
+                </td>
+                <td>
+                  <button type="button" class="delete-btn"
+                    onclick="removeProductModal(event, '<%= item.productId._id %>')">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+
+                
+                
+              </tr>
+            </tbody>
+            <% }); %>
+          </table>
+
+          
+    
+          <!-- Coupon Section -->
+          <!-- <div class="coupon-container">
+            <input type="text" placeholder="Coupon code">
+            <button class="apply-coupon-btn">Apply Coupon</button>
+          </div> -->
+        </div>
+    
+        <!-- Cart Totals -->
+        <div class="cart-totals">
+          <h2>Cart Totals</h2>
+          <!-- <p><strong>Subtotal:</strong> <span class="cart-total">$245.00</span></p> -->
+          <p><strong>Total:</strong> <span class="cart-total"><%= totalAmount %></span></p>
+          <button 
+          type="button" 
+          class="checkout-btn" 
+          onclick="redirectToCheckout(<%= totalProducts %>, <%= totalAmount %>, '<%= JSON.stringify(productIds) %>', '<%= JSON.stringify(productQuantities) %>')">
+          Proceed to Checkout
+        </button>
+          <a href="/product" style="text-decoration: none;"><button class="filled-continue-shopping-btn">Continue Shopping</button></a>
+        </div>
+      </div>
+    </div>
+
+        
+
+    <% } else { %>
+      <main>
+        <div class="main-content">
+          <div class="main-image-container">
+            <img src="../images/pic.png" alt="Empty Cart">
+          </div>
+          <div class="text-section">
+            <h1>Your Cart is Empty</h1>
+            
+          </div>
+          <div class="button-container">
+            <button class="continue-shopping-btn" ><a href="/product" style="text-decoration: none; color: inherit;">Continue Shopping</a></button>
+          </div>
+        </div>
+      </main>
+      
+      <% } %>
+  
+    
+  
+  
+ 
+
+  
+
+<%- include('../partials/footer') %>
+  
+      
+
+
+<div  style="display: none;" id="updateModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Update Cart Quantity</h2>
+          <p>Your changes have been saved.</p>
+        </div>
+      </div>
+      
+      <div class="removeModal">
+        <div id="removeModal" class="modal" style="display: none;">
+          <div class="modal-content">
+            <span class="close" onclick="closeRemoveModal()">&times;</span>
+            <h2>Confirm Remove</h2>
+            <p>Are you sure you want to remove this product from your cart?</p>
+            <button id="confirmRemove" class="confirm-btn">Yes, Remove</button>
+            <button class="close-btn" onclick="closeRemoveModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+
+  <script>
+    function redirectToCheckout(totalProducts, totalAmount, productIds,productQuantities) {
+  
+      // Redirect to checkout route, passing total products, total amount, and product IDs as query parameters
+      window.location.href = `/address/?totalProducts=${totalProducts}&totalAmount=${totalAmount}&productIds=${encodeURIComponent(productIds)}&productQuantities=${encodeURIComponent(productQuantities)}`;
+    }
+  </script>
+  <script>
+
+      
+    // Modal logic
+    function openUpdateModal(event) {
+      event.preventDefault();
+      const modal = document.getElementById('updateModal');
+      modal.style.display = 'block';
+
+      // Close modal when clicking the "x"
+      document.querySelector('.close').onclick = () => {
+        modal.style.display = 'none';
+      };
+
+      // Close modal when clicking outside the modal content
+      window.onclick = (event) => {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      };
+    }
+
+    // Remove product modal logic
+    function removeProductModal(event, productId) {
+      event.preventDefault();
+      const modal = document.getElementById('removeModal');
+      modal.style.display = 'block';
+
+      // Close modal when clicking the "x" or "Cancel" button
+      document.querySelectorAll('.close').forEach((closeBtn) => {
+        closeBtn.onclick = () => {
+          modal.style.display = 'none';
+        };
+      });
+
+      // Confirm removal button logic with fetch DELETE request
+      document.getElementById('confirmRemove').onclick = async () => {
+        try {
+          const response = await fetch(`/cart/remove/${productId}`, {
+            method: 'DELETE',
+          });
+
+          if (response) {
+            // Reload the cart page to reflect the removed item
+            window.location.reload();
+          } else {
+            alert('Failed to remove item from cart');
+          }
+        } catch (error) {
+          console.error('Error removing item:', error);
+          alert('Error removing item from cart');
+        }
+
+        modal.style.display = 'none';
+      };
+
+      // Close modal when clicking outside the modal content
+      window.onclick = (event) => {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      };
+    }
+
+    // Open Clear Cart Modal
+    function openClearCartModal(event) {
+      event.preventDefault();
+      const modal = document.getElementById('clearCartModal');
+      modal.style.display = 'block';
+
+      // Close modal when clicking the "x" or "Cancel" button
+      document.querySelectorAll('.close').forEach(closeBtn => {
+        closeBtn.onclick = () => {
+          modal.style.display = 'none';
+        };
+      });
+
+      // Confirm clear cart button logic with fetch request
+      document.getElementById('confirmClearCart').onclick = async () => {
+        try {
+          const response = await fetch(`/cart/clear`, {
+            method: 'DELETE',
+          });
+
+          if (response.ok) {
+            // Reload the cart page to show the empty cart
+            window.location.href = '/cart';
+            // window.location.reload();
+          } else {
+            alert('Failed to clear cart');
+          }
+        } catch (error) {
+          console.error('Error clearing cart:', error);
+          alert('Error clearing cart');
+        }
+
+        modal.style.display = 'none';
+      };
+
+      // Close modal when clicking outside the modal content
+      window.onclick = (event) => {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      };
+    }
+
+  </script>
+
+<script>
+  function showRemoveModal() {
+  const modal = document.getElementById('removeModal');
+  modal.classList.add('show');
+}
+
+function closeRemoveModal() {
+  const modal = document.getElementById('removeModal');
+  modal.classList.remove('show');
+}
+
+  function updateQuantity(event, change, productId) {
+const input = event.target.parentElement.querySelector('input[type="number"]');
+let quantity = parseInt(input.value);
+const price = parseFloat(input.dataset.price);
+
+// Update quantity
+quantity += change;
+
+// Prevent quantity below 1
+if (quantity < 1) quantity = 1;
+
+input.value = quantity;
+
+// Update subtotal
+const subtotalElement = document.getElementById(`subtotal-${productId}`);
+const newSubtotal = (price * quantity).toFixed(2);
+subtotalElement.innerText = `$${newSubtotal}`;
+
+// (Optional) Send AJAX request to update quantity in cart (server-side)
+fetch('/cart/update', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+
+body: JSON.stringify({ productId, quantity })
+}).then(res => res.json())
+.then(data => {
+if (data.success) {
+console.log('Cart updated');
+window.location.reload();
+} else {
+console.error('Failed to update cart');
+}
+});
+}
+</script>
+</body>
+</html>

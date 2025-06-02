@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Confirmation Popup</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .logout-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 300px;
+        }
+
+        .popup-content h2 {
+            margin-top: 0;
+        }
+
+        .confirm-button,
+        .cancel-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        .confirm-button {
+            color: rgb(62, 62, 62);
+            border: 0.3px solid rgb(204, 202, 202);
+        }
+
+        .cancel-button {
+            color: rgb(62, 62, 62);
+            border: 0.3px solid rgb(204, 202, 202);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="logout-button" onclick="showLogoutPopup()">Logout</button>
+    <div id="logoutPopup" class="popup">
+        <div class="popup-content">
+            <h2>Logout</h2>
+            <p>Are you sure you want to logout?</p> <button class="confirm-button"
+                onclick="confirmLogout()">Yes</button> <button class="cancel-button"
+                onclick="hideLogoutPopup()">No</button>
+        </div>
+    </div>
+
+    <script>
+        function showLogoutPopup() {
+            document.getElementById('logoutPopup').style.display = 'flex';
+        }
+
+        function hideLogoutPopup() {
+            document.getElementById('logoutPopup').style.display = 'none';
+        }
+
+        function confirmLogout() {
+            // Redirect to logout URL
+            window.location.href = '/logout'; // Replace '/logout' with your actual logout URL
+        }
+
+
+    </script>
+</body>
+
+</html>

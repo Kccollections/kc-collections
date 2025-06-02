@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Categories</title>
+    <link rel="stylesheet" href="../stylesheets/Quick Links.css">
+    <link rel="stylesheet" href="../stylesheets/header_styles.css">
+  
+  <link rel="stylesheet" href="../stylesheets/footer_styles.css">
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+      <%- include('../partials/navbar') %>
+  
+
+    
+      <div class="container">
+        <div class="help-categories">
+            <div class="categories">
+                <h2><strong>Help Categories</strong></h2>
+                <ul>
+                  <li id="order-delivery"><a href="/help/orderDeliverInformation" style="text-decoration: none; color: inherit;">Order Delivery Information</a></li>
+                  <li id="my-account" class="active-category"><a href="/help/myAccount" style="text-decoration: none; color: inherit;">My Account</a></li>
+                  <li id="payment"><a href="/help/payments" style="text-decoration: none; color: inherit;">Payment Options</a></li>
+                  <li id="returns"><a href="/help/returns" style="text-decoration: none; color: inherit;">Returns and Exchanges</a></li>
+              </ul>
+            </div>
+            <div class="faq-content">
+                
+                <div id="my-account-content" class="faq-section" >
+                    <h2>My Account</h2>
+                    <div class="faq-item">
+                        <button>How do I update my account information?</button>
+                        <div class="answer">
+                            You can update your account information by visiting the "Account Settings" section in your profile.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I change my password?</button>
+                        <div class="answer">
+                            To change your password, go to "Account Settings" and click on "Change Password." Follow the instructions provided.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How can I delete my account?</button>
+                        <div class="answer">
+                            To delete your account, please contact our customer support team, and they will guide you through the process.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I update my email address?</button>
+                        <div class="answer">
+                            You can update your email address in the "Account Settings" section under "Personal Information."
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I manage my notification preferences?</button>
+                        <div class="answer">
+                            You can manage your notification preferences by going to "Account Settings" and selecting "Notification Preferences."
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I link my social media accounts to my account?</button>
+                        <div class="answer">
+                            Yes, you can link your social media accounts by visiting "Account Settings" and selecting "Linked Accounts."
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I view my order history?</button>
+                        <div class="answer">
+                            To view your order history, go to the "My Orders" section in your account dashboard.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I update my billing address?</button>
+                        <div class="answer">
+                            You can update your billing address in the "Account Settings" under "Address Book."
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>Can I deactivate my account temporarily?</button>
+                        <div class="answer">
+                            To temporarily deactivate your account, please contact customer support, and they will assist you.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How can I change my profile picture?</button>
+                        <div class="answer">
+                            You can change your profile picture by visiting "Account Settings" and selecting "Profile Picture."
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I manage my payment methods?</button>
+                        <div class="answer">
+                            You can manage your payment methods by going to "Account Settings" and selecting "Payment Methods."
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I cancel my subscription?</button>
+                        <div class="answer">
+                            To cancel your subscription, go to the "Subscriptions" section in your account and select "Cancel Subscription."
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button>How do I recover my account if I forget my password?</button>
+                        <div class="answer">
+                            If you forget your password, click on "Forgot Password" on the login page, and follow the instructions to reset it.
+                        </div>
+                    </div>
+                    
+               
+                
+    
+                </div>
+            </div>
+        </div>
+      </div>
+
+
+
+      <script>
+        // Toggle FAQ answers and close others
+        const faqButtons = document.querySelectorAll('.faq-item button');
+        const categories = document.querySelectorAll('.categories ul li');
+
+        faqButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Close all answers
+                faqButtons.forEach(btn => {
+                    if (btn !== button) {
+                        btn.classList.remove('active');
+                        btn.nextElementSibling.style.display = 'none';
+                    }
+                });
+
+                // Toggle current answer
+                button.classList.toggle('active');
+                const answer = button.nextElementSibling;
+                answer.style.display = button.classList.contains('active') ? 'block' : 'none';
+            });
+        });
+
+        // Highlight selected category
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                // Remove active class from all categories
+                categories.forEach(cat => cat.classList.remove('active-category'));
+                
+                // Add active class to clicked category
+                category.classList.add('active-category');
+
+                // Update FAQ title
+                document.querySelector('.faq-content h2').textContent = category.textContent;
+            });
+        });
+    </script>
+
+ 
+<%- include('../partials/footer') %>

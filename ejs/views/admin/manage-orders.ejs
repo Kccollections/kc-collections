@@ -1,0 +1,19 @@
+<%- include('../partials/header', { title: 'Manage Orders' }) %>
+<h2>Manage Orders</h2>
+<% orders.forEach(order => { %>
+  <div class="order-admin">
+    <h3>Order ID: <%= order._id %></h3>
+    <p>Status: <%= order.status %></p>
+    <form action="/admin/order/<%= order._id %>" method="POST">
+      <label for="status">Update Status:</label>
+      <select name="status" id="status">
+        <option value="Processing" <%= order.status === 'Processing' ? 'selected' : '' %>>Processing</option>
+        <option value="Shipped" <%= order.status === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+        <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+        <option value="Canceled" <%= order.status === 'Canceled' ? 'selected' : '' %>>Canceled</option>
+      </select>
+      <button type="submit" class="btn">Update</button>
+    </form>
+  </div>
+<% }); %>
+
