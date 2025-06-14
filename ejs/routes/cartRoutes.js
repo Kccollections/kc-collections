@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { authenticate } = require('../middleware/auth');
-const cartController = require('../../controllers/cartController');
+const cartController = require('../controllers/cartController');
 
 // Ensure all cart routes are protected and accessible only to authenticated users
 router.use(authenticate);

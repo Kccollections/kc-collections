@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 // Connect to MongoDB
-const connectDB = require('../config/db');
+const connectDB = require('./config/db'); // Adjust the path as necessary
 connectDB();
 
 // Import routes

@@ -1,5 +1,5 @@
 const express = require('express');
-const razorpayController = require('../../controllers/RazorpayController.js');
+const razorpayController = require('../controllers/RazorpayController.js');
 const router = express.Router();
 const { authenticate } = require('../middleware/auth.js');
 const Address = require('../models/Address');
@@ -9,7 +9,7 @@ const user = require('../models/User');
 const mongoose = require('mongoose');
 const ShiprocketService = require('./shiprocketService.js');
 const nodemailer = require('nodemailer');
-const razorpay = require('../../config/razorpayClient.js');
+const razorpay = require('../config/razorpayClient.js');
 const OrderTemp = require('../models/OrderTemp');
 
 
